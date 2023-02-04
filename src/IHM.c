@@ -20,23 +20,28 @@ unsigned short int movimentarMenuPrincipal(unsigned short int posicao)
   }
   switch (posicao)
   {
-  case 0:
-    menuCultivo_1();
+  case menuCultivo:
+    menuCultivo_0();
     break;
-  case 1:
-    menuSensores_2();
+  case menuSensores:
+    menuSensores_1();
     break;
-  case 2:
-    menuAtuadores_3();
+  case menuAtuadores:
+    menuAtuadores_2();
     break;
-  case 3:
-    menuPlanta_4();
+  case menuPlanta:
+    menuPlanta_3();
     break;
-  case 4:
-    menuRede_5();
+  case menuRede:
+    menuRede_4();
     break;
   }
   return posicao;
+}
+void movimentaTeste(int menu, int submenu, int submenuteste)
+{
+  int posicoes[3];
+#define posicao menu
 }
 
 unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned short int posicaoMenu)
@@ -56,7 +61,7 @@ unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned 
   }
   switch (posicaoMenu)
   {
-  case 0: // menu1 de cultivo e seus derivados
+  case menuCultivo: // menu1 de cultivo e seus derivados
     switch (posicaoSubMenu)
     {
     case 0:
@@ -67,42 +72,42 @@ unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned 
     }
     break;
 
-  case 1: // menu2 de sensores e seus derivados
+  case menuSensores: // menu2 de sensores e seus derivados
     switch (posicaoSubMenu)
     {
-    case 0:
+    case subMenuTemperaturaAmb:
       menuSensoresTempAmb_0();
       break;
-    case 1:
+    case subMenuUmidade:
       menuSensoresUmidade_1();
       break;
-    case 2:
+    case subMenuTemperaturaAgua:
       menuSensoresTempAgua_2();
       break;
-    case 3:
+    case subMenuPH:
       menuSensoresPH_3();
       break;
-    case 4:
+    case subMenuLuminosidade:
       menuSensoresLuminosidade_4();
       break;
     }
     break;
-  case 2: // menu2 de Atuadores_3
+  case menuAtuadores: // menu2 de Atuadores_3
     switch (posicaoSubMenu)
     {
-    case 0:
+    case subMenuMotorPrincipal: // SUB MENU TEMPERATURA AMB
       menuAtuadoresMotorPrincipal_0();
       break;
-    case 1:
+    case subMenuMotorAuxiliar: // SUB MENU TEMPERATURA AMB
       menuAtuadoresMotorAuxiliar_1();
       break;
-    case 2:
+    case subMenuLeds: // SUB MENU TEMPERATURA AMB
       menuAtuadoresLeds_2();
       break;
-    case 3:
+    case subMenuCoolerAmbiente: // SUB MENU TEMPERATURA AMB
       menuAtuadoresCoolerAmbiente_3();
       break;
-    case 4:
+    case subMenuCoolerAgua: // SUB MENU TEMPERATURA AMB
       menuAtuadoresCoolerAgua_4();
       break;
     }
@@ -123,34 +128,46 @@ unsigned short int movimentaSubmenuAlteracoes(unsigned short int posicaoSubMenuA
   }
   switch (posicaoMenu)
   {
-  case 0: // menu de cultivo
-  case 1: // menu SENSORES
+  case menuCultivo: // menu de cultivo
+    break;
+  case menuSensores: // menu SENSORES
     switch (posicaoSubMenu)
     {
-    case 0: // SUB MENU TEMPERATURA AMB
-      if (posicaoSubMenuAlteracao == 0)
-      {
-        alteraValorSubMenuTemperaturaAmb(digito);
-      }
+    case subMenuTemperaturaAmb: // SUB MENU TEMPERATURA AMB
+      alteraValorMaxMinSubMenuSensores(digito, subMenuTemperaturaAmb);
       break;
-    case 1: // SUB MENU TEMPERATURA AMB
-      LCD_Clear();
-      LCD_Out(1, 1, "SUB MENU");
-      LCD_Out(2, 1, "22");
+    case subMenuUmidade:
+      alteraValorMaxMinSubMenuSensores(digito, subMenuUmidade);
       break;
-    case 2:
-      LCD_Clear();
-      LCD_Out(1, 1, "SUB MENU");
-      LCD_Out(2, 1, "23");
+    case subMenuTemperaturaAgua:
+      alteraValorMaxMinSubMenuSensores(digito, subMenuTemperaturaAgua);
+      break;
+    case subMenuPH:
+      alteraValorMaxMinSubMenuSensores(digito, subMenuPH);
+      break;
+    case subMenuLuminosidade:
+      alteraValorMaxMinSubMenuSensores(digito, subMenuLuminosidade);
       break;
     }
     break;
   case 2: // menu de atuaodres
     switch (posicaoSubMenu)
     {
-    case 0: // SUB MENU TEMPERATURA AMB
-
+    case subMenuMotorPrincipal: 
       alterarPotenciaMotor(digito, &dutyCicle1);
+      break;
+    case subMenuMotorAuxiliar: 
+      alterarPotenciaMotor(digito, &dutyCicle1);
+      break;
+    case subMenuLeds: 
+      alterarPotenciaMotor(digito, &dutyCicle1);
+      break;
+    case subMenuCoolerAmbiente: 
+      alterarPotenciaMotor(digito, &dutyCicle1);
+      break;
+    case subMenuCoolerAgua: 
+      alterarPotenciaMotor(digito, &dutyCicle1);
+      break;
     }
     break;
   }

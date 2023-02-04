@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=PWM.h
+Value=IHM.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -41,7 +41,11 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=0
+File0=programacao.c
+File1=interfaceSubMenuAlteracao.c
+File2=interfaceSubMenuAlteracao.h
+File3=IHM.c
+Count=4
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -91,6 +95,7 @@ Count=3
 [LIB_EXPANDED_NODES]
 0=mikroE Libraries
 1=System Libraries
+2=ADC
 385=PWM
 408=Software_SPI
 881=Time

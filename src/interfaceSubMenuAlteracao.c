@@ -49,7 +49,7 @@ void alteraVariavel(unsigned short int *valorMin, unsigned short int *valorMax, 
   case 1:
     coluna = 6;
     max = *valorMax;
-    min =  milhar+ *valorMin % 10;
+    min = milhar + *valorMin % 10;
     break;
   case 2:
     coluna = 13;
@@ -83,9 +83,26 @@ void alteraVariavel(unsigned short int *valorMin, unsigned short int *valorMax, 
   }
   LCD_Set_Cursor(2, coluna);
 }
-void alteraValorSubMenuTemperaturaAmb(unsigned short int digitoPressionado)
+void alteraValorMaxMinSubMenuSensores(unsigned short int digitoPressionado, unsigned short int posicaoSubmenu)
 {
-  alteraVariavel(&temperaturaMIN, &temperaturaMAX, digitoPressionado);
+  switch (posicaoSubmenu)
+  {
+  case subMenuTemperaturaAmb:
+    alteraVariavel(&temperaturaMIN, &temperaturaMAX, digitoPressionado);
+    break;
+  case subMenuUmidade:
+    alteraVariavel(&umidadeMIN, &umidadeMAX, digitoPressionado);
+    break;
+  case subMenuTemperaturaAgua:
+    alteraVariavel(&temperaturaAguaMIN, &temperaturaAguaMAX, digitoPressionado);
+    break;
+  case subMenuPH:
+    alteraVariavel(&phMIN, &phMAX, digitoPressionado);
+    break;
+  case subMenuLuminosidade:
+    alteraVariavel(&luminosidadeMIN, &luminosidadeMAX, digitoPressionado);
+    break;
+  }
 }
 void resetarAcoesSubMenuAlteracao()
 {

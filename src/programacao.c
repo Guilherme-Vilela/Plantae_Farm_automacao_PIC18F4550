@@ -102,7 +102,7 @@ void atualizarInformacoes()
     break;
   }
   atualizar = 0;
-};
+}
 void I2C1_TimeoutCallback(char errorCode)
 {
   erroI2c = 1;

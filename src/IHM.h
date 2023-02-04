@@ -18,6 +18,24 @@
 #define botaoSair   'B'
 #define botaoAtualizar  'X'
 
+#define menuCultivo 0
+#define menuSensores 1
+#define menuAtuadores 2
+#define menuPlanta 3
+#define menuRede 4
+
+
+#define subMenuTemperaturaAmb 0
+#define subMenuUmidade 1
+#define subMenuTemperaturaAgua 2
+#define subMenuPH 3
+#define subMenuLuminosidade 4
+
+#define subMenuMotorPrincipal 0
+#define subMenuMotorAuxiliar 1
+#define subMenuLeds 2
+#define subMenuCoolerAmbiente 3
+#define subMenuCoolerAgua 4
 
 void movimentaMenu(char tecla);
 void verificaPressionamentoTeclado();
