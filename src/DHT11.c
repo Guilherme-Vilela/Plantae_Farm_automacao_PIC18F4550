@@ -12,13 +12,13 @@ unsigned short int leituraByteDht11(){
   //Start TIMER 1
   startTimer1();
   
-  while(i-- && timer1 <= 2 ){
-    while(!DHT11_PIN && timer1 <= 2 );
+  while(i-- && timer1 <= 1 ){
+    while(!DHT11_PIN && timer1 <= 1);
     delay_us(40);
 
-    if( DHT11_PIN && timer1 <= 2){
+    if( DHT11_PIN && timer1 <= 1){
       dht11_byte |= (1 << i);  // << desloca bits para esquerda
-      while( DHT11_PIN && timer1 <= 2);
+      while( DHT11_PIN && timer1 <= 1);
     }
   }
   T1CON = 0x30;

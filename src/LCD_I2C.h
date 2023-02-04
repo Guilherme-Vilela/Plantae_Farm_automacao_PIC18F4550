@@ -1,6 +1,6 @@
 /* File: I2C_LCD.h */
 
-#define LCD_ADDRESS            0X4E
+#define LCD_ADDRESS            0X46
 #define LCD_BACKLIGHT          0x08
 #define LCD_NOBACKLIGHT        0x00
 #define LCD_FIRST_ROW          0x80
@@ -34,3 +34,6 @@ void noBacklight();
 void LCD_Clear();
 void Lcd_Out(unsigned char row, unsigned char col, char* Str);
 void Lcd_Chr(unsigned char row, unsigned char col, char Data);
+void LCD_Underline();
+void LCD_Cursor();
+void LCD_NoCursor();

@@ -7,7 +7,7 @@ void leituraDs18b20(float *temperaturaAgua){
  float sensor_temp_;
  short int i = 0;
  startTimer1();
- while(i == 0 && timer1 <= 10){
+ while(i == 0 && timer1 <= 3){
     Ow_Reset(DS128B20_PORT, DS128B20_PIN);                         //
     Delay_ms(1);
     Ow_Write(DS128B20_PORT, DS128B20_PIN, 0xCC);                   //DIRECIONA SENSORES
@@ -55,7 +55,7 @@ void leituraDs18b20(float *temperaturaAgua){
     }
    }
    stopTimer1();
-   if(timer1 >= 10){
+   if(timer1 >= 3){
     *temperaturaAgua = 99;
    }
 }

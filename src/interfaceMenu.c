@@ -6,7 +6,7 @@ void menuCultivo_1(){
 //  if (planta_cultivada != 255)
 //  {
     LCD_Out(1, 1, " CULTIVO: ");
-    LCD_Out(2, 1, plantas[planta_cultivada]);
+//    LCD_Out(2, 1, plantas[planta_cultivada]);
     //diasRestantes = duracaoCultivo[planta_cultivada];
   //}
   //else if (planta_cultivada == 255)
@@ -18,24 +18,24 @@ void menuCultivo_1(){
 void menuSensores_2()
 {
  LCD_Clear();
- Lcd_Out(1, 3, "INFORMACOES DOS");
- Lcd_Out(2, 3, "SENSORES");
+ Lcd_Out(1, 1, "INFORMACOES DOS");
+ Lcd_Out(2, 1, "SENSORES");
 }
 void menuAtuadores_3()
 {
  LCD_Clear();
- Lcd_Out(1, 3, "INFORMACOES DOS");
- Lcd_Out(2, 3, "ATUADORES");
+ Lcd_Out(1, 1, "INFORMACOES DOS");
+ Lcd_Out(2, 1, "ATUADORES");
 }
 void menuPlanta_4()
 {
  LCD_Clear();
- Lcd_Out(1, 3, "INFORMACOES DAS");
- Lcd_Out(2, 3, "PLANTAS");
+ Lcd_Out(1, 1, "INFORMACOES DAS");
+ Lcd_Out(2, 1, "PLANTAS");
 }
 void menuRede_5()
 {
  LCD_Clear();
- Lcd_Out(1, 3, "INFORMACOES DA");
+ Lcd_Out(1, 1, "INFORMACOES DA");
  Lcd_Out(2, 1, "CONEXAO COM REDE");
 }

@@ -1,57 +1,54 @@
 // Variaveis principais
 extern unsigned short int luminosidade;
-extern unsigned short int luminosidadeMAX = 70;
-extern unsigned short int luminosidadeMIN = 30;
+extern unsigned short int luminosidadeMAX;
+extern unsigned short int luminosidadeMIN;
 
 extern float temperaturaAgua;
-extern unsigned short int temperaturaAguaMAX = 26;
-extern unsigned short int temperaturaAguaMIN = 22;
+extern unsigned short int temperaturaAguaMAX;
+extern unsigned short int temperaturaAguaMIN;
 
-extern unsigned short int temperatura = 0;
-extern unsigned short int temperaturaMAX = 26;
-extern unsigned short int temperaturaMIN = 22;
+extern unsigned short int temperatura;
+extern unsigned short int temperaturaMAX;
+extern unsigned short int temperaturaMIN;
 
-extern unsigned short int umidade = 0;
-extern unsigned short int umidadeMAX = 21;
-extern unsigned short int umidadeMIN = 21;
+extern unsigned short int umidade;
+extern unsigned short int umidadeMAX;
+extern unsigned short int umidadeMIN;
 
-extern unsigned short int nivelAgua = 0;
-extern unsigned short int nivelAguaMAX = 0;
-extern unsigned short int nivelAguaMIN = 0;
+extern unsigned short int nivelAgua;
+extern unsigned short int nivelAguaMAX;
+extern unsigned short int nivelAguaMIN;
 
-extern unsigned short int ph = 0;
-extern unsigned short int phMAX = 10;
-extern unsigned short int phMIN = 0;
+extern unsigned short int ph;
+extern unsigned short int phMAX;
+extern unsigned short int phMIN;
 
-extern unsigned short int tensaoBateria = 0;
-extern unsigned short int tensaoBateriaMin = 0;
+extern unsigned short int tensaoBateria;
+extern unsigned short int tensaoBateriaMin;
 
-extern unsigned short int correnteLeds = 0;
-extern unsigned short int correnteLedsMAX = 0;
+extern unsigned short int vazaoAgua;
 
-extern unsigned short int vazaoAgua = 0;
+extern unsigned short int correnteLeds;
+extern unsigned short int correnteLedsMAX;
+extern unsigned short int correnteMotorAuxiliar;
+extern unsigned short int correnteMotorAuxiliarMAX;
+extern unsigned short int correnteMotorPrincipal;
+extern unsigned short int correnteMotorPrincipalMAX;
+extern unsigned short int correnteCooler;
+extern unsigned short int correnteCoolerMAX;
+extern unsigned short int correnteCoolerAgua;
+extern unsigned short int correnteCoolerAguaMAX;
 
-extern unsigned short int correnteMotorAuxiliar = 0;
-extern unsigned short int correnteMotorAuxiliarMAX = 0;
-
-extern unsigned short int correnteMotorPrincipal = 0;
-extern unsigned short int correnteMotorPrincipalMAX = 0;
-
-extern unsigned short int correnteCooler = 0;
-extern unsigned short int correnteCoolerMAX = 0;
-
-extern unsigned short int correnteCoolerAgua = 0;
-extern unsigned short int correnteCoolerAguaMAX = 0;
-extern char teclaPressionada = 0;
+extern char teclaPressionada;
 extern unsigned short int erroMotor;
 extern unsigned short int erroSensorCano;
 extern unsigned short int SemAguaCano;
 extern unsigned short int erroTemperatura;
-extern unsigned short int interrupcaoTeclado;
+extern unsigned short int interrupcaoTeclado = 0;
 
-#define flagLeituraTeclado interrupcaoTeclado.b0;
-#define flagLeituraTecladoEmAndamento interrupcaoTeclado.b1;
-#define flagTecladoPressionado interrupcaoTeclado.b2;
+#define flagLeituraTeclado interrupcaoTeclado.b0
+#define flagLeituraTecladoEmAndamento interrupcaoTeclado.b1
+#define flagStatusTeclado interrupcaoTeclado.b2
 
 extern unsigned short int erroSensor;
 
@@ -60,42 +57,153 @@ extern bit erroIluminacao;
 extern bit erroComunicaoesp;
 extern bit mensagemExibidaa;
 extern bit atualizaMenu;
+extern bit erroI2C;
 
 extern unsigned short int interrupcaoKBI;
+#define falhaRedeEnergia interrupcaoKBI.b0
+#define leituraEspDisponivel interrupcaoKBI.b1
 
-extern unsigned short dutyCicle1, dutyCicle2;
+extern unsigned short int dutyCicle1, dutyCicle2;
+
 extern char status_atuadores;
 
-#define statusLeds 'LEDSW'
-#define leds 'LEDAW'
-#define correnteLeds 'LEDCW'
-#define statusCoolerPlanta 'COPSW'
-#define coolerPlanta 'COPAW'
-#define correnteCoolerPlanta 'COPCW'
-#define statusCoolerAgua 'COASW'
-#define coolerAgua 'COAAW'
-#define correnteCoollerAgua 'COACW'
-#define statusResistencia 'RESSW'
-#define resistencia 'RESAW'
-#define correnteResistencia 'RESCW'
-#define StatusMotor 'MTPSW'
-#define MotorPrincipal 'MTPAW'
-#define CorrenteMotor 'MTPCW'
-#define StatusMotorAuxiliar 'MTASW'
-#define MotorAuxiliar 'MTAAW'
-#define CorrenteMotorAuxiliar 'MTACW'
-#define luminosidadeMax 'LUMHW'
-#define luminosidadeMin 'LUMLW'
-#define luminosidade 'LUMRW'
-#define temperaturaMax 'TMPHW'
-#define temperaturaMin 'TMPLW'
-#define temperaturaAmbiente 'TMPRW'
-#define temperaturaAguaMax 'TPAHW'
-#define temperaturaAguaMin 'TPALW'
-#define temperaturaAgua 'TPARW'
-#define umidadeMax 'UMIHW'
-#define umidadeMin 'UMILW'
-#define umidade 'UMIRW'
-#define phMax 'SPHHW'
-#define phMin 'SPHLW'
-#define ph 'SPHRW'
+#define topicCoolerAgua         \
+    {                           \
+        'C', 'O', 'A', 'A', 'W' \
+    }
+#define topicCorrenteCoolerAgua \
+    {                           \
+        'C', 'O', 'A', 'C', 'W' \
+    }
+#define topicStatusCoolerAgua   \
+    {                           \
+        'C', 'O', 'A', 'S', 'W' \
+    }
+#define topicCoolerPlanta       \
+    {                           \
+        'C', 'O', 'P', 'A', 'W' \
+    }
+#define topicCorrenteCoolerPlanta \
+    {                             \
+        'C', 'O', 'P', 'C', 'W'   \
+    }
+#define topicStatusCoolerPlanta \
+    {                           \
+        'C', 'O', 'P', 'S', 'W' \
+    }
+#define topicLeds               \
+    {                           \
+        'L', 'E', 'D', 'A', 'W' \
+    }
+#define topicCorrenteLeds       \
+    {                           \
+        'L', 'E', 'D', 'C', 'W' \
+    }
+#define topicStatusLeds         \
+    {                           \
+        'L', 'E', 'D', 'S', 'W' \
+    }
+#define topicLuminosidadeMax    \
+    {                           \
+        'L', 'U', 'M', 'H', 'W' \
+    }
+#define topicLuminosidadeMin    \
+    {                           \
+        'L', 'U', 'M', 'L', 'W' \
+    }
+#define topicLuminosidade       \
+    {                           \
+        'L', 'U', 'M', 'R', 'W' \
+    }
+#define topicMotorAuxiliar      \
+    {                           \
+        'M', 'T', 'A', 'A', 'W' \
+    }
+#define topicNivelAgua          \
+    {                           \
+        'N', 'I', 'V', 'E', 'W' \
+    }
+#define topicCorrenteMotorAuxiliar \
+    {                              \
+        'M', 'T', 'A', 'C', 'W'    \
+    }
+#define topicStatusMotorAuxiliar \
+    {                            \
+        'M', 'T', 'A', 'S', 'W'  \
+    }
+#define topicMotorPrincipal     \
+    {                           \
+        'M', 'T', 'P', 'A', 'W' \
+    }
+#define topicCorrenteMotor      \
+    {                           \
+        'M', 'T', 'P', 'C', 'W' \
+    }
+#define topicStatusMotor        \
+    {                           \
+        'M', 'T', 'P', 'S', 'W' \
+    }
+#define topicResistencia        \
+    {                           \
+        'R', 'E', 'S', 'A', 'W' \
+    }
+#define topicCorrenteResistencia \
+    {                            \
+        'R', 'E', 'S', 'C', 'W'  \
+    }
+#define topicStatusResistencia  \
+    {                           \
+        'R', 'E', 'S', 'S', 'W' \
+    }
+#define topicPhMax              \
+    {                           \
+        'S', 'P', 'H', 'H', 'W' \
+    }
+#define topicPhMin              \
+    {                           \
+        'S', 'P', 'H', 'L', 'W' \
+    }
+#define topicPh                 \
+    {                           \
+        'S', 'P', 'H', 'R', 'W' \
+    }
+#define topicTemperaturaMax     \
+    {                           \
+        'T', 'M', 'P', 'H', 'W' \
+    }
+#define topicTemperaturaMin     \
+    {                           \
+        'T', 'M', 'P', 'L', 'W' \
+    }
+#define topicTemperatura        \
+    {                           \
+        'T', 'M', 'P', 'R', 'W' \
+    }
+#define topicTemperaturaAguaMax \
+    {                           \
+        'T', 'P', 'A', 'H', 'W' \
+    }
+#define topicTemperaturaAguaMin \
+    {                           \
+        'T', 'P', 'A', 'L', 'W' \
+    }
+#define topicTemperaturaAgua    \
+    {                           \
+        'T', 'P', 'A', 'R', 'W' \
+    }
+#define topicTensaoBateria      \
+    {                           \
+        'V', 'B', 'A', 'T', 'W' \
+    }
+#define topicUmidadeMax         \
+    {                           \
+        'U', 'M', 'I', 'H', 'W' \
+    }
+#define topicUmidadeMin         \
+    {                           \
+        'U', 'M', 'I', 'L', 'W' \
+    }
+#define topicUmidade            \
+    {                           \
+        'U', 'M', 'I', 'R', 'W' \
+    }

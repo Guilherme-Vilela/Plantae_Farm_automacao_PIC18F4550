@@ -3,102 +3,180 @@
 #include "atuadores.h"
 #include "ESP_I2C.h"
 
+void verificarLeds()
+{
+  char topic[5] = topicLuminosidade;
 
-  void verificarLeds(){
-      char msg[5];
-       if(luminosidade >= luminosidadeMAX){
-         desligaLed();
-         msg
-       }else if (luminosidade <= luminosidadeMIN){
-         ligaLed();
-       }
+  // envia luminosidade para o ESP publicar
+  //sendTopic(topic, luminosidade);
 
+  if (luminosidade >= luminosidadeMAX)
+  {
+    desligaLed();
   }
-  void verificarTemperaturaAgua(){
-       if(temperaturaAgua >= temperaturaAguaMAX){
-         ligaCoolerAgua();
-       }else if (temperaturaAgua <= temperaturaAguaMIN){
-         desligaCoolerAgua();
-       }
+  else if (luminosidade <= luminosidadeMIN)
+  {
+    ligaLed();
   }
-  void verificarTemperatura(){
-       if(temperatura >= temperaturaMAX){
-         ligaCoolerAmbiente();
-       }else if (temperatura <= temperaturaMIN){
-         desligaCoolerAmbiente();
-       }
-  }
-  void verificarUmidade(){
-       if(umidade >= umidadeMAX){
-         //enviar mensagem de erro ou setar bit
-       }else if (umidade <= umidadeMIN){
-         //enviar mensagem de erro ou setar bit
-       }
-  }
-  void verificarPh(){
-       if(ph >= phMAX){
-         //enviar mensagem de erro ou setar bit
-       }else if (ph <= phMIN){
-         //enviar mensagem de erro ou setar bit;
-       }
-  }
-  void verificarTensaoBateria(){
-       if(tensaoBateria <= tensaoBateriaMIN){
-         //enviar mensagem de erro ou setar bit
-       }
-  }
-  void verificarCorrenteLeds(){
-       if(correnteLeds >= correnteLedsMAX){
-         //enviar mensagem de erro ou setar bit
-       }
-  }
-  void verificarCorrenteLeds(){
-       if(correnteLeds >= correnteLedsMAX){
-         //enviar mensagem de erro ou setar bit
-       }
-  }
-  void verificarNivelAgua(){
-       if(nivelAgua >= nivelAguaMAX){
-         //enviar mensagem de erro ou setar bit
-       }else if(nivelAgua <=  nivelAguaMIN){
-       //enviar mensagem de erro ou setar bit
-       }
-  }
+}
+void verificarTemperaturaAgua()
+{
+  char topic[5] = topicTemperaturaAgua;
+  // envia luminosidade para o ESP publicar
+  sendTopic(topic, temperaturaAgua);
 
-  void verificarVazaoAgua(){
+  if (temperaturaAgua >= temperaturaAguaMAX)
+  {
+    ligaCoolerAgua();
+  }
+  else if (temperaturaAgua <= temperaturaAguaMIN)
+  {
+    desligaCoolerAgua();
+  }
+}
+void verificarTemperatura()
+{
+  char topic[5] = topicTemperatura;
+  // envia luminosidade para o ESP publicar
+  sendTopic(topic, temperatura);
 
+  if (temperatura >= temperaturaMAX)
+  {
+    ligaCoolerAmbiente();
   }
-  void verificarCorrenteMotorAuxiliar(){
-       if(correnteMotorAuxiliar >= correnteMotorAuxiliarMAX){
-         //enviar mensagem de erro ou setar bit
-       }
+  else if (temperatura <= temperaturaMIN)
+  {
+    desligaCoolerAmbiente();
+  }
+}
+void verificarUmidade()
+{
+  char topic[5] = topicUmidade;
+  // envia luminosidade para o ESP publicar
+  sendTopic(topic, umidade);
 
+  if (umidade >= umidadeMAX)
+  {
+    // enviar mensagem de erro ou setar bit
   }
-  void verificarCorrenteMotorPrincipal(){
-       if(correnteMotorPrincipal >= correnteMotorPrincipalMAX){
-         //enviar mensagem de erro ou setar bit
-       }
+  else if (umidade <= umidadeMIN)
+  {
+    // enviar mensagem de erro ou setar bit
   }
-  void verificarCorrenteCooler(){
-       if(correnteCooler >= correnteCoolerMAX){
-         //enviar mensagem de erro ou setar bit
-       }
-  }
-  void verificarCorrenteCoolerAgua(){
-       if(correnteCoolerAgua >= correnteCoolerAguaMAX){
-         //enviar mensagem de erro ou setar bit
-       }
-  }
-  void analisarSensores(){
+}
+void verificarPh()
+{
+  char topic[5] = topicPh;
+  // envia luminosidade para o ESP publicar
+  sendTopic(topic, ph);
 
+  //       if(ph >= phMAX){
+  // enviar mensagem de erro ou setar bit
+  //       }else if (ph <= phMIN){
+  // enviar mensagem de erro ou setar bit;
+  //       }
+}
+void verificarTensaoBateria()
+{
+  char topic[5] = topicTensaoBateria;
+  // envia luminosidade para o ESP publicar
+  sendTopic(topic, tensaoBateria);
+
+  if (tensaoBateria <= tensaoBateriaMIN)
+  {
+    // enviar mensagem de erro ou setar bit
   }
+}
+void verificarCorrenteLeds()
+{
+  char topic[5] = topicCorrenteLeds;
+  // envia luminosidade para o ESP publicar
+  sendTopic(topic, correnteLeds);
 
-//void mensagemErro(char* mesagem){
+  if (correnteLeds >= correnteLedsMAX)
+  {
+    // enviar mensagem de erro ou setar bit
+  }
+}
+void verificarNivelAgua()
+{
+  char topic[5] = topicNivelAgua;
+  // envia luminosidade para o ESP publicar
+  sendTopic(topic, nivelAgua);
+  if (nivelAgua <= nivelAguaMIN)
+  {
+    // enviar mensagem de erro ou setar bit
+  }
+}
 
-  /*LCD_Clear();
-  LCD_Out(1,1,"ERRO");
-  LCD_Out(2,1,mesagem);
-  //mensagemExibida = 1;
+void verificarVazaoAgua()
+{
+}
+void verificarCorrenteMotorAuxiliar()
+{
+  char topic[5] = topicCorrenteMotorAuxiliar;
+  // envia luminosidade para o ESP publicar
+  sendTopic(topic, correnteMotorAuxiliar);
+
+  if (correnteMotorAuxiliar >= correnteMotorAuxiliarMAX)
+  {
+    // enviar mensagem de erro ou setar bit
+  }
+}
+void verificarCorrenteMotorPrincipal()
+{
+
+  char topic[5] = topicCorrenteMotor;
+  // envia luminosidade para o ESP publicar
+  sendTopic(topic, correnteMotorPrincipal);
+
+  if (correnteMotorPrincipal >= correnteMotorPrincipalMAX)
+  {
+    // enviar mensagem de erro ou setar bit
+  }
+}
+void verificarCorrenteCooler()
+{
+  char topic[5] = topicCorrenteCoolerPlanta;
+  // envia luminosidade para o ESP publicar
+  sendTopic(topic, correnteCooler);
+  if (correnteCooler >= correnteCoolerMAX)
+  {
+    // enviar mensagem de erro ou setar bit
+  }
+}
+void verificarCorrenteCoolerAgua()
+{
+  char topic[5] = topicCorrenteCoolerAgua;
+  // envia luminosidade para o ESP publicar
+  sendTopic(topic, correnteCoolerAgua);
+  if (correnteCoolerAgua >= correnteCoolerAguaMAX)
+  {
+    // enviar mensagem de erro ou setar bit
+  }
+}
+void analisarSensores()
+{
+  verificarLeds();
+  verificarTemperaturaAgua();
+  verificarTemperatura();
+  verificarUmidade();
+  verificarPh();
+  verificarTensaoBateria();
+  verificarCorrenteLeds();
+  verificarNivelAgua();
+  verificarCorrenteMotorAuxiliar();
+  verificarCorrenteMotorPrincipal();
+  verificarCorrenteCooler();
+  verificarCorrenteCoolerAgua();
+}
+
+// void mensagemErro(char* mesagem){
+
+/*LCD_Clear();
+LCD_Out(1,1,"ERRO");
+LCD_Out(2,1,mesagem);
+//mensagemExibida = 1;
 
 }*/
 /*void verificarErros(){
@@ -173,8 +251,9 @@
     atualizaMenu = 1;
    }
 }*/
-void resetaMensagemErro(){
-   //LCD_Clear();
-   //mensagemExibida = 0;
-   //verificarErros();
+void resetaMensagemErro()
+{
+  // LCD_Clear();
+  // mensagemExibida = 0;
+  // verificarErros();
 }

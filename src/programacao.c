@@ -6,46 +6,60 @@
 #include "WS2812.h"
 #include "atuadores.h"
 #include "IHM.h"
-#include "plantas.h"
 #include "ESP_I2C.h"
 #include "leituraAD.h"
 #include "timer.h"
-//#include "verificacaoErros.c"
-
-
+#include "verificacaoErros.h"
+#include "PWM.h"
+//#include "plantas.h"
 //******************************************************************************
 //   VOID DE INTERRUP��ES
 //**************************0****************************************************
 
-void interrupt(void){        //Interrup��es de alta prioridade
+void interrupt(void)
+{ // Interrup��es de alta prioridade
+ if (INTCON.TMR0IF)
+  {
+      timer0++;
+    INTCON.TMR0IF = 0;
+  }
+  if (INTCON.RBIF)
+  {
+    if (!RB4_bit)
+    { // RB4 INT_TECLADO  INTERRUP��O DE TECLADO
+      if (flagLeituraTecladoEmAndamento == 0)
+      {                         // verifica se uma leitura ja n�o esta ocorrendo
+        flagLeituraTeclado = 1; // da start na interrup��o e inicia captura da tecla
+      }
+    }
+    if (!RB5_bit)
+    { // RB5 INT_REDE    INTERRUP��O DE REDE ELETRICA, ATIVA NOBREACK
+      falhaRedeEnergia = 1;
+    }
+    if (!RB6_bit)
+    {
+    }
+    if (!RB7_bit)
+    { // RB7 INT_ESP   INTERRUP��O ESP, READ I2C ESP
+      leituraEspDisponivel = 1;
+    }
+    INTCON.RBIF = 0;
+  }
+  if (PIR1.TMR1IF)
+  {
+    timer1++;
+    PIR1.TMR1IF = 0;
+  }
+
+ if (PIR1.ADIF)
+  {
+    PIR1.ADIF = 0;
+  }
+}
+void interrupt_low(void)
+{ // Interrup��es de baixa prioridade
 
 }
- void interrupt_low(void){   //Interrup��es de baixa prioridade
-
-
-    if(INTCON.RBIF){
-      if(!RB4_bit){   //RB4 INT_TECLADO  INTERRUP��O DE TECLADO
-      if(flagLeituraTecladoEmAndamento == 0){ //verifica se uma leitura ja n�o esta ocorrendo
-        flagLeituraTeclado = 1;    //da start na interrup��o e inicia captura da tecla
-       }
-      }
-      if(!RB5_bit){     //RB5 INT_REDE    INTERRUP��O DE REDE ELETRICA, ATIVA NOBREACK
-      }
-      if(!RB6_bit){  //verifica se o motor 1 n�o esta em sobre corrente
-      }
-      if(!RB7_bit){   //RB7 INT_ESP   INTERRUP��O ESP, READ I2C ESP
-      }
-      INTCON.RBIF = 0;
-    }
-    if(INTCON.TMR0IF){
-     timer0++;
-     INTCON.TMR0IF =0;
-    }
-    if(PIR1.TMR1IF){
-     timer1++;
-     PIR1.TMR1IF = 0;
-    }
- }
 
 //******************************************************************************
 //   FIM VOID DE INTERRUP��ES
@@ -53,19 +67,44 @@ void interrupt(void){        //Interrup��es de alta prioridade
 void verificaSensores()
 {
   leituraDht11(&umidade, &temperatura); // leitura de valores DHT11
-  leituraDs18b20(&temperaturaAgua);            //LEITURA TEMPERATURA DA �GUA
-  leituraPortasAnalogicas(); //faz a leitura das 9 entradas analogicas
-  
-//  luminosidade = ADC_Read(PIN_LDR)/ 10;           // Captura valor na porta analogica
-  
+  leituraDs18b20(&temperaturaAgua);     // LEITURA TEMPERATURA DA �GUA
 
-//  verificaAtuadores();
-//  verificarErros();           //VALIDA��O DE ERROS
+  leituraPortasAnalogicas(); // faz a leitura das 9 entradas analogicas
+//  ligaResistenciaAmbiente();
+//  analisarSensores();
+//  ligaCoolerAgua();
+
+//   verificaAtuadores();
+  //  verificarErros();           //VALIDA��O DE ERROS
 }
+void I2C1_TimeoutCallback(char errorCode)
+{
+  erroI2c = 1;
+  I2C1_Stop();
+  if (errorCode == _I2C_TIMEOUT_RD)
+  {
 
+    // do something if timeout is caused during read
+  }
+
+  if (errorCode == _I2C_TIMEOUT_WR)
+  {
+    // do something if timeout is caused during write
+  }
+
+  if (errorCode == _I2C_TIMEOUT_START)
+  {
+    // do something if timeout is caused during start
+  }
+
+  if (errorCode == _I2C_TIMEOUT_REPEATED_START)
+  {
+    // do something if timeout is caused during repeated start
+  }
+}
 void main()
 {
-  bit inicializacao;
+delay_ms(500);
   //******************************************************************************
   //   CONFIGURA��ES DE INTERRUP��O
   //******************************************************************************
@@ -78,7 +117,7 @@ void main()
   PIE2 = 0b00000000;
   IPR1 = 0b00000000;
   IPR2 = 0b00000000;
-  RCON = 0b10000000;
+  RCON = 0b00000000;
 
   //******************************************************************************
   //   FIM CONFIGURA��ES DE INTERRUP��O
@@ -87,28 +126,29 @@ void main()
   //******************************************************************************
   //   CONFIGURA��ES DE TRIS
   //******************************************************************************
-  TRISC0_bit = 1; // CONFIG SENSOR CANO COMO ENTRADA
-  //TRISD0_bit = 0;
-  TRISD1_bit = 1;
   TRISA = 0b11111111;
-  TRISB = 0b11110000;
+  TRISB = 0b11111111;
+  TRISC = 0b00001110;
+  TRISD = 0b00000011;
+  TRISE = 0b11111111;
   //******************************************************************************
   //   FIM CONFIGURA��ES DE TRIS
   //******************************************************************************[
   //******************************************************************************
   //   CONFIGURA��ES DE TIMER 0
   //******************************************************************************
-  T0CON = 0x87; // CONFIG T0CON PRE ESCALER 256  16BITS
-  T1CON = 0x30;  //CONFIG PARA TIMER 1
+  T0CON = 0x07; // CONFIG T0CON PRE ESCALER 256  16BITS
+  T1CON = 0x30; // CONFIG PARA TIMER 1
   //******************************************************************************
   //   FIM CONFIGURA��ES DE TIMER 0
   //******************************************************************************
   //******************************************************************************
   //   CONFIGURA��ES CONVERSOR ANALOGICO DIGITAL
   //******************************************************************************
-  ADCON0 = 0b00000000; //
-  ADCON1 = 0b00001011; // HABILITA DE A0 ATE A3 COMO ENTRADA ANALOGICA
-  ADCON2 = 0b10000000;
+
+  ADCON0 = 0b00000001; //
+  ADCON1 = 0b00000101; // HABILITA DE A0 ATE A9 COMO ENTRADA ANALOGICA
+  ADCON2 = 0b00111110;
 
   //******************************************************************************
   //   FIM CONFIGURA��ES CONVERSOR ANALOGICO DIGITAL
@@ -117,49 +157,40 @@ void main()
   //******************************************************************************
   //   Inicializa��o
   //******************************************************************************
-  delay_ms(500);
 
+//  flagLeituraTeclado = 0;
   I2C1_Init(100000); // Inicializa comunica��o I2C
-  // inciializa��o do LCD
-   LCD_Init();
-   LCD_Clear();
-   LCD_Out(1,1," PLANTACAO");
-   LCD_Out(2,1,"****************");
-   delay_ms(1000);
-  // incializa��o do LCD
+  I2C1_SetTimeoutCallback(100, I2C1_TimeoutCallback);
+  // set timeout period and callback function
 
-  // incializa��o do TECLADO
-  I2C1_Start();  // Inicia I2C
-  I2C1_Wr(0x40); // Envia o byte por I2C (endere�o do dispositivo + Write)
-  I2C1_Wr(0x0F);
-  I2C1_Stop();
-  //******************************************************************************
-  //   FIM inicializa��o
-  //******************************************************************************
+  LCD_Init();
+  LCD_Clear();
+  LCD_Out(1, 1, "PLANTAE SOLUCOES");
+  LCD_Out(2, 1, "*******-********");
+
+  iniciaTeclado();
+  iniciarPWM();
+  ligaCoolerAmbiente();
   verificaSensores();
 
-  
-  movimentaMenu(0);
-
-  /*if(planta_cultivada != 255 && inicializacao == 0){
-   inicializacao = 1;
-   iniciarPWM();
-   timer0 = 0;
-
-  }*/
-
-  for (;;)
-  { // LOOP
-    if (timer0 > 1)
+  startTimer0();
+  delay_ms(100);
+  for (;;)// LOOP
+  {
+    if (timer0 > 10)
     {
       timer0 = 0;
-      verificaSensores();         //VALIDA��O DE ERROS
+      //erroI2c = 0;
+      verificaSensores(); // VALIDA��O DE ERROS
+      atualizaMenu =1;
     }
-    if (atualizaMenu)
+   if (atualizaMenu)
     {
-      atualizaMenu = 0;
+    movimentaMenu('X');
+    atualizaMenu = 0;
+    setPWM1();
     }
-     verificaPressionamentoTeclado();
+    verificaPressionamentoTeclado();
 
   } // FINAL LOOP
 } // FINAL MAIN

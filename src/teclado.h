@@ -3,7 +3,7 @@
 char intTeclado = 0;
 //flagLeituraTeclado ACIONADO QUANDO RB4 MUDA DE STATUS  1= HOUVE INTERRUP��O   0= SEM INTERRUP��O
 //flagLeituraTecladoEmAndamento ACIONADO QUANDO INCIA PROCESSO DE CAPUTA DE TECLA PRESSIONADA  1= EM PROCESSO   0= COMPLETO
-//flagTecladoPressionado UTILIZADO PARA SABER SE O BOT�OJA FOI SOLTO 1 = SOLTO 0 = PRESSIONADO
+//flagStatusTeclado UTILIZADO PARA SABER SE O BOT�OJA FOI SOLTO 1 = SOLTO 0 = PRESSIONADO
 
 void leituraTeclado(){
  unsigned short coluna = 6;
@@ -15,7 +15,7 @@ void leituraTeclado(){
  char teclas[4][4] ={{'7', '4', '1', 'O'},
   {'8','5', '2', '0'},
   {'9', '6', '3', '='},
-  {'<', '>', '-', '+'}};
+  {'<', 'C', '-', '+'}};
   
   flagLeituraTecladoEmAndamento = 1;     //set flag de processamento travando interrup��o
   I2C1_Start();          //inicia comunicao I2C
@@ -84,7 +84,7 @@ void leituraTeclado(){
    }
     /*Lcd_Chr(2,1,teclaPressionada);*/
   flagLeituraTecladoEmAndamento = 0;           // RESET BIT INDICANDO QUE A PROCESSO ACABOU
-  flagTecladoPressionado = 0;            //  INICIA BIT DE ESPERAR O USUARIO SOLTAR O BOT�O
+  flagStatusTeclado = 0;            //  INICIA BIT DE ESPERAR O USUARIO SOLTAR O BOT�O
 
 }
 void verificaTecladoSolto(){
@@ -97,14 +97,14 @@ void verificaTecladoSolto(){
   while(I2C1_Is_Idle() == 0){};  //VERIFICA SE BARRAMENTO FOI LIBERADO
   I2C1_Stop();                   //FINALIZA COMUNICA��O I2C
   if(valorRecebido == 15){        //VERIFICA SE O TECLADO FOI SOLTO
-    flagTecladoPressionado = 1;            //LIBERA BIT PARA PODER INCIAR UMA NOVA LEITURA DE TECLADO
+    flagStatusTeclado = 1;            //LIBERA BIT PARA PODER INCIAR UMA NOVA LEITURA DE TECLADO
   }
 
 }
 void verificaPressionamentoTeclado(){   //FUN��O PADR�O
  if(flagLeituraTeclado ){               //VERIFICA SE HOUVE ALGUM CLICK
   flagLeituraTeclado = 0;               //reseta flag da interrup��o
-  if(flagTecladoPressionado){              //verifica se o teclado estava solto
+  if(flagStatusTeclado){              //verifica se o teclado estava solto
   leituraTeclado();
              //faz leitura da tecla processada
   }else{
