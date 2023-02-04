@@ -1,0 +1,1 @@
+char* intToChar(int value, char *address);

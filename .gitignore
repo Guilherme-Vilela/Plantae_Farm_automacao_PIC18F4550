@@ -8,6 +8,7 @@
 *.log
 *.dlt
 *.lst
+*.mcl
 
 # Object files
 *.o

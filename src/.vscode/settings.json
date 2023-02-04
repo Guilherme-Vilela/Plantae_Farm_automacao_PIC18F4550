@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.cp": "c",
+        "verificacaoerros.h": "c"
+    }
+}
