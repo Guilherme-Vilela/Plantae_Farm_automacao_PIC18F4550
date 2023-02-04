@@ -2,6 +2,12 @@
 *.d
 *.asm
 *.cp
+*.mlc
+*.bmk
+*.cfg
+*.log
+*.dlt
+*.lst
 
 # Object files
 *.o
