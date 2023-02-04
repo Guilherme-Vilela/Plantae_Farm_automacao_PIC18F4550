@@ -71,13 +71,13 @@ unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned 
     switch (posicaoSubMenu)
     {
     case 0:
-      menuSensoresTempAgua_2();
+      menuSensoresTempAmb_0();
       break;
     case 1:
       menuSensoresUmidade_1();
       break;
     case 2:
-      menuSensoresTempAmb_0();
+      menuSensoresTempAgua_2();
       break;
     case 3:
       menuSensoresPH_3();
@@ -123,7 +123,7 @@ unsigned short int movimentaSubmenuAlteracoes(unsigned short int posicaoSubMenuA
   }
   switch (posicaoMenu)
   {
-  case 0: //menu de cultivo
+  case 0: // menu de cultivo
   case 1: // menu SENSORES
     switch (posicaoSubMenu)
     {
@@ -131,8 +131,6 @@ unsigned short int movimentaSubmenuAlteracoes(unsigned short int posicaoSubMenuA
       if (posicaoSubMenuAlteracao == 0)
       {
         alteraValorSubMenuTemperaturaAmb(digito);
-        LCD_Clear();
-        LCD_Out(2, 1, "23");
       }
       break;
     case 1: // SUB MENU TEMPERATURA AMB
@@ -147,13 +145,14 @@ unsigned short int movimentaSubmenuAlteracoes(unsigned short int posicaoSubMenuA
       break;
     }
     break;
-   case 2: //menu de atuaodres
-   switch (posicaoSubMenu){
+  case 2: // menu de atuaodres
+    switch (posicaoSubMenu)
+    {
     case 0: // SUB MENU TEMPERATURA AMB
 
-        alterarPotenciaMotor(digito,&dutyCicle1);
-   }
-   break;
+      alterarPotenciaMotor(digito, &dutyCicle1);
+    }
+    break;
   }
   return posicaoSubMenuAlteracao;
 }
@@ -178,13 +177,13 @@ void movimentaMenu(char tecla)
   static unsigned short int posicaoSubMenuAlteracoes = 0;
   unsigned short int digito = 10;
   unsigned short int acoesMenu = 0;
-        
+
   switch (tecla)
   {
-  case botaoVoltar:
+  case botaoAvancar:
     avancarMenu = 1;
     break;
-  case botaoAvancar:
+  case botaoVoltar:
     voltarMenu = 1;
     break;
   case botaoEntrar:
@@ -221,9 +220,10 @@ void movimentaMenu(char tecla)
 
   if (entrarMenu)
   {
-   if(subMenu == 1 && subMenuAlteracoes == 1){
-     digito = 65;
-   }
+    if (subMenu == 1 && subMenuAlteracoes == 1)
+    {
+      digito = 65;
+    }
     else if (subMenu != 0)
     {
       subMenuAlteracoes = 1;
@@ -346,7 +346,7 @@ void leituraTeclado()
 ////////////////////////////////////////////////////////////////////////////////////
 void verificaTecladoSolto()
 {
-  unsigned short valorRecebido = 0;
+  unsigned short digitoPressionado = 0;
 
   while (I2C1_Is_Idle() == 0)
   {
@@ -354,9 +354,9 @@ void verificaTecladoSolto()
 
   I2C1_Start();                    // I       INICIA COMUNICA��O I2C
   I2C1_Wr(enderecoTecladoLeitura); // ENVIA ENDERE�O DO DISPOSITVO ESCRAVO E COMANDO DE LEITURA
-  valorRecebido = I2C1_Rd(0);      // ARMAZENA DADOS DE LEITURA EM COLUNA
+  digitoPressionado = I2C1_Rd(0);  // ARMAZENA DADOS DE LEITURA EM COLUNA
   I2C1_Stop();                     // FINALIZA COMUNICA��O I2C
-  if (valorRecebido == 15)
+  if (digitoPressionado == 15)
   {                        // VERIFICA SE O TECLADO FOI SOLTO
     flagStatusTeclado = 0; // LIBERA BIT PARA PODER INCIAR UMA NOVA LEITURA DE TECLADO
   }

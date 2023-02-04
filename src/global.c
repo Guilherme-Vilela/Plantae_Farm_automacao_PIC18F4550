@@ -42,11 +42,9 @@ unsigned short int correnteCoolerMAX =0;
 unsigned short int correnteCoolerAgua =0;
 unsigned short int correnteCoolerAguaMAX =0;
 
-
-char teclaPressionada = 0;
 unsigned short int erroMotor= 0;
 unsigned short int erroSensorCano= 0;
-unsigned short int SemAguaCano= 0;
+unsigned short int atualizaMenu= 0;
 unsigned short int erroTemperatura= 0;
 unsigned short int interrupcaoTeclado = 0;
 unsigned short int erroSensor= 0;
@@ -55,7 +53,6 @@ bit erroTempAgua;
 bit erroIluminacao;
 bit erroComunicaoesp;
 bit mensagemExibidaa;
-bit atualizaMenu;
 bit erroI2C;
  
 unsigned short int interrupcaoKBI;

@@ -11,16 +11,16 @@
 #include "timer.h"
 #include "verificacaoErros.h"
 #include "PWM.h"
-//#include "plantas.h"
+// #include "plantas.h"
 //******************************************************************************
-//   VOID DE INTERRUP��ES
+//    VOID DE INTERRUP��ES
 //**************************0****************************************************
 
 void interrupt(void)
 { // Interrup��es de alta prioridade
- if (INTCON.TMR0IF)
+  if (INTCON.TMR0IF)
   {
-      timer0++;
+    timer0++;
     INTCON.TMR0IF = 0;
   }
   if (INTCON.RBIF)
@@ -51,14 +51,13 @@ void interrupt(void)
     PIR1.TMR1IF = 0;
   }
 
- if (PIR1.ADIF)
+  if (PIR1.ADIF)
   {
     PIR1.ADIF = 0;
   }
 }
 void interrupt_low(void)
 { // Interrup��es de baixa prioridade
-
 }
 
 //******************************************************************************
@@ -70,11 +69,11 @@ void verificaSensores()
   leituraDs18b20(&temperaturaAgua);     // LEITURA TEMPERATURA DA �GUA
 
   leituraPortasAnalogicas(); // faz a leitura das 9 entradas analogicas
-//  ligaResistenciaAmbiente();
-//  analisarSensores();
-//  ligaCoolerAgua();
+  //  ligaResistenciaAmbiente();
+  //  analisarSensores();
+  //  ligaCoolerAgua();
 
-//   verificaAtuadores();
+  //   verificaAtuadores();
   //  verificarErros();           //VALIDA��O DE ERROS
 }
 void I2C1_TimeoutCallback(char errorCode)
@@ -104,7 +103,7 @@ void I2C1_TimeoutCallback(char errorCode)
 }
 void main()
 {
-delay_ms(500);
+  delay_ms(500);
   //******************************************************************************
   //   CONFIGURA��ES DE INTERRUP��O
   //******************************************************************************
@@ -158,7 +157,7 @@ delay_ms(500);
   //   Inicializa��o
   //******************************************************************************
 
-//  flagLeituraTeclado = 0;
+  //  flagLeituraTeclado = 0;
   I2C1_Init(100000); // Inicializa comunica��o I2C
   I2C1_SetTimeoutCallback(100, I2C1_TimeoutCallback);
   // set timeout period and callback function
@@ -175,20 +174,37 @@ delay_ms(500);
 
   startTimer0();
   delay_ms(100);
-  for (;;)// LOOP
+  for (;;) // LOOP
   {
     if (timer0 > 10)
     {
       timer0 = 0;
-      //erroI2c = 0;
+      // erroI2c = 0;
       verificaSensores(); // VALIDA��O DE ERROS
-      atualizaMenu =1;
+      atualizaMenu = 1;
     }
-   if (atualizaMenu)
+    if (atualizaMenu > 0)
     {
-    movimentaMenu('X');
-    atualizaMenu = 0;
-    setPWM1();
+      switch (atualizaMenu)
+      {
+      case atualiza_menu_entrar:
+        movimentaMenu('A');
+        break;
+      case atualiza_menu_sair:
+        movimentaMenu('B');
+        break;
+      case atualiza_menu_avancar:
+        movimentaMenu('C');
+        break;
+      case atualiza_menu_voltar:
+        movimentaMenu('D');
+        break;
+      default:
+        movimentaMenu('X');
+        break;
+      }
+      atualizaMenu = 0;
+      setPWM1();
     }
     verificaPressionamentoTeclado();
 

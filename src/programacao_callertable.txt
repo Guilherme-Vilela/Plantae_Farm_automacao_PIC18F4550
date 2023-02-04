@@ -310,7 +310,7 @@ main
 							I2C1_Wr
 								____DoIFC
 							I2C1_Stop
-			menuSensoresTempAgua_2
+			menuSensoresTempAmb_0
 				LCD_Clear
 					LCD_CMD
 						LCD_WRITE_4Bit
@@ -341,8 +341,6 @@ main
 								I2C1_Wr
 									____DoIFC
 								I2C1_Stop
-				double2int
-					SETIOV3224
 				escritaSensores
 					intToChar
 						Div_16x16_S
@@ -462,7 +460,7 @@ main
 									I2C1_Wr
 										____DoIFC
 									I2C1_Stop
-			menuSensoresTempAmb_0
+			menuSensoresTempAgua_2
 				LCD_Clear
 					LCD_CMD
 						LCD_WRITE_4Bit
@@ -493,6 +491,8 @@ main
 								I2C1_Wr
 									____DoIFC
 								I2C1_Stop
+				double2int
+					SETIOV3224
 				escritaSensores
 					intToChar
 						Div_16x16_S
@@ -1175,7 +1175,18 @@ main
 		movimentaSubmenuAlteracoes
 			alteraValorSubMenuTemperaturaAmb
 				alteraVariavel
-					LCD_Set_Cursor
+					resetarAcoesSubMenuAlteracao
+						LCD_NoCursor
+							LCD_CMD
+								LCD_WRITE_4Bit
+									LCD_WRITE
+										I2C1_Start
+											I2C1_Is_Idle
+											____DoIFC
+										I2C1_Wr
+											____DoIFC
+										I2C1_Stop
+					LCD_Cursor
 						LCD_CMD
 							LCD_WRITE_4Bit
 								LCD_WRITE
@@ -1185,15 +1196,27 @@ main
 									I2C1_Wr
 										____DoIFC
 									I2C1_Stop
-					LCD_CMD
-						LCD_WRITE_4Bit
-							LCD_WRITE
-								I2C1_Start
-									I2C1_Is_Idle
-									____DoIFC
-								I2C1_Wr
-									____DoIFC
-								I2C1_Stop
+					LCD_Out
+						LCD_Set_Cursor
+							LCD_CMD
+								LCD_WRITE_4Bit
+									LCD_WRITE
+										I2C1_Start
+											I2C1_Is_Idle
+											____DoIFC
+										I2C1_Wr
+											____DoIFC
+										I2C1_Stop
+						LCD_WRITE_Char
+							LCD_WRITE_4Bit
+								LCD_WRITE
+									I2C1_Start
+										I2C1_Is_Idle
+										____DoIFC
+									I2C1_Wr
+										____DoIFC
+									I2C1_Stop
+					Div_8X8_U
 					intToChar
 						Div_16x16_S
 							Div_16x16_S_L
@@ -1217,18 +1240,16 @@ main
 									I2C1_Wr
 										____DoIFC
 									I2C1_Stop
-					Div_8X8_U
-					resetarAcoesSubMenuAlteracao
-						LCD_NoCursor
-							LCD_CMD
-								LCD_WRITE_4Bit
-									LCD_WRITE
-										I2C1_Start
-											I2C1_Is_Idle
-											____DoIFC
-										I2C1_Wr
-											____DoIFC
-										I2C1_Stop
+					LCD_Set_Cursor
+						LCD_CMD
+							LCD_WRITE_4Bit
+								LCD_WRITE
+									I2C1_Start
+										I2C1_Is_Idle
+										____DoIFC
+									I2C1_Wr
+										____DoIFC
+									I2C1_Stop
 			LCD_Clear
 				LCD_CMD
 					LCD_WRITE_4Bit
@@ -1568,7 +1589,7 @@ main
 									I2C1_Wr
 										____DoIFC
 									I2C1_Stop
-					menuSensoresTempAgua_2
+					menuSensoresTempAmb_0
 						LCD_Clear
 							LCD_CMD
 								LCD_WRITE_4Bit
@@ -1599,8 +1620,6 @@ main
 										I2C1_Wr
 											____DoIFC
 										I2C1_Stop
-						double2int
-							SETIOV3224
 						escritaSensores
 							intToChar
 								Div_16x16_S
@@ -1720,7 +1739,7 @@ main
 											I2C1_Wr
 												____DoIFC
 											I2C1_Stop
-					menuSensoresTempAmb_0
+					menuSensoresTempAgua_2
 						LCD_Clear
 							LCD_CMD
 								LCD_WRITE_4Bit
@@ -1751,6 +1770,8 @@ main
 										I2C1_Wr
 											____DoIFC
 										I2C1_Stop
+						double2int
+							SETIOV3224
 						escritaSensores
 							intToChar
 								Div_16x16_S
@@ -2433,7 +2454,18 @@ main
 				movimentaSubmenuAlteracoes
 					alteraValorSubMenuTemperaturaAmb
 						alteraVariavel
-							LCD_Set_Cursor
+							resetarAcoesSubMenuAlteracao
+								LCD_NoCursor
+									LCD_CMD
+										LCD_WRITE_4Bit
+											LCD_WRITE
+												I2C1_Start
+													I2C1_Is_Idle
+													____DoIFC
+												I2C1_Wr
+													____DoIFC
+												I2C1_Stop
+							LCD_Cursor
 								LCD_CMD
 									LCD_WRITE_4Bit
 										LCD_WRITE
@@ -2443,15 +2475,27 @@ main
 											I2C1_Wr
 												____DoIFC
 											I2C1_Stop
-							LCD_CMD
-								LCD_WRITE_4Bit
-									LCD_WRITE
-										I2C1_Start
-											I2C1_Is_Idle
-											____DoIFC
-										I2C1_Wr
-											____DoIFC
-										I2C1_Stop
+							LCD_Out
+								LCD_Set_Cursor
+									LCD_CMD
+										LCD_WRITE_4Bit
+											LCD_WRITE
+												I2C1_Start
+													I2C1_Is_Idle
+													____DoIFC
+												I2C1_Wr
+													____DoIFC
+												I2C1_Stop
+								LCD_WRITE_Char
+									LCD_WRITE_4Bit
+										LCD_WRITE
+											I2C1_Start
+												I2C1_Is_Idle
+												____DoIFC
+											I2C1_Wr
+												____DoIFC
+											I2C1_Stop
+							Div_8X8_U
 							intToChar
 								Div_16x16_S
 									Div_16x16_S_L
@@ -2475,18 +2519,16 @@ main
 											I2C1_Wr
 												____DoIFC
 											I2C1_Stop
-							Div_8X8_U
-							resetarAcoesSubMenuAlteracao
-								LCD_NoCursor
-									LCD_CMD
-										LCD_WRITE_4Bit
-											LCD_WRITE
-												I2C1_Start
-													I2C1_Is_Idle
-													____DoIFC
-												I2C1_Wr
-													____DoIFC
-												I2C1_Stop
+							LCD_Set_Cursor
+								LCD_CMD
+									LCD_WRITE_4Bit
+										LCD_WRITE
+											I2C1_Start
+												I2C1_Is_Idle
+												____DoIFC
+											I2C1_Wr
+												____DoIFC
+											I2C1_Stop
 					LCD_Clear
 						LCD_CMD
 							LCD_WRITE_4Bit
