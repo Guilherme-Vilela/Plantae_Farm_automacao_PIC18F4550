@@ -248,7 +248,7 @@ LCD_Out(2,1,mesagem);
     erroTemperatura.b3 =0;
    }
    if(mensagemExibida == 0){
-    atualizaMenu = 1;
+    atualizar = 1;
    }
 }*/
 void resetaMensagemErro()

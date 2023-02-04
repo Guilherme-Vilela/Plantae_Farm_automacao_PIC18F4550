@@ -44,7 +44,7 @@ unsigned short int correnteCoolerAguaMAX =0;
 
 unsigned short int erroMotor= 0;
 unsigned short int erroSensorCano= 0;
-unsigned short int atualizaMenu= 0;
+unsigned short int atualizar= 0;
 unsigned short int erroTemperatura= 0;
 unsigned short int interrupcaoTeclado = 0;
 unsigned short int erroSensor= 0;

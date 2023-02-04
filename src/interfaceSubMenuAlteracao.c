@@ -34,7 +34,7 @@ void alteraVariavel(unsigned short int *valorMin, unsigned short int *valorMax, 
     *valorMax = dezena + unidade;
     *valorMin = milhar + centena;
     resetarAcoesSubMenuAlteracao();
-    atualizaMenu = atualiza_menu_sair;
+    atualizar = atualizaMenuSair;
   }
   LCD_Cursor();
   Lcd_Out(1, 1, "Alterar variaveis");
@@ -128,7 +128,7 @@ void alterarPotenciaMotor(unsigned short int digitoPressionado, unsigned short i
       *dutyCicle = (int)((dezena * 10) + unidade) * 255 / 100;
     }
     resetarAcoesSubMenuAlteracao();
-    atualizaMenu = 1;
+    atualizar = 1;
   }
   LCD_Cursor();
   LCD_Out(1, 1, "Motor em: ");

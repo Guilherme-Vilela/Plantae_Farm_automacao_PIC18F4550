@@ -76,6 +76,33 @@ void verificaSensores()
   //   verificaAtuadores();
   //  verificarErros();           //VALIDA��O DE ERROS
 }
+void atualizarInformacoes()
+{
+  switch (atualizar)
+  {
+  case atualizaMenuEntrar:
+    movimentaMenu('A');
+    break;
+  case atualizaMenuSair:
+    movimentaMenu('B');
+    break;
+  case atualizaMenuAvancar:
+    movimentaMenu('C');
+    break;
+  case atualizaMenuVoltar:
+    movimentaMenu('D');
+    break;
+  case atualizaLCD:
+    movimentaMenu('X');
+    break;
+  case atualizarPWM1:
+    setPWM1();
+    break;
+  default:
+    break;
+  }
+  atualizar = 0;
+};
 void I2C1_TimeoutCallback(char errorCode)
 {
   erroI2c = 1;
@@ -181,30 +208,11 @@ void main()
       timer0 = 0;
       // erroI2c = 0;
       verificaSensores(); // VALIDA��O DE ERROS
-      atualizaMenu = 1;
+      atualizar = atualizaLCD;
     }
-    if (atualizaMenu > 0)
+    if (atualizar > 0)
     {
-      switch (atualizaMenu)
-      {
-      case atualiza_menu_entrar:
-        movimentaMenu('A');
-        break;
-      case atualiza_menu_sair:
-        movimentaMenu('B');
-        break;
-      case atualiza_menu_avancar:
-        movimentaMenu('C');
-        break;
-      case atualiza_menu_voltar:
-        movimentaMenu('D');
-        break;
-      default:
-        movimentaMenu('X');
-        break;
-      }
-      atualizaMenu = 0;
-      setPWM1();
+      atualizarInformacoes();
     }
     verificaPressionamentoTeclado();
 

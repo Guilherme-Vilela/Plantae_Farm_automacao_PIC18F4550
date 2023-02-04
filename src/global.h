@@ -40,7 +40,7 @@ extern unsigned short int correnteCoolerAgua;
 extern unsigned short int correnteCoolerAguaMAX;
 
 extern unsigned short int erroMotor;
-extern unsigned short int atualizaMenu= 0;
+
 extern unsigned short int SemAguaCano;
 extern unsigned short int erroTemperatura;
 extern unsigned short int interrupcaoTeclado = 0;
@@ -206,8 +206,11 @@ extern char status_atuadores;
     {                           \
         'U', 'M', 'I', 'R', 'W' \
     }
-
-#define atualiza_menu_entrar 65
-#define atualiza_menu_sair 66
-#define atualiza_menu_avancar 67
-#define atualiza_menu_voltar 68
+extern unsigned short int atualizar = 0;
+#define atualizaMenuEntrar 65
+#define atualizaMenuSair 66
+#define atualizaMenuAvancar 67
+#define atualizaMenuVoltar 68
+#define atualizaLCD 1
+#define atualizarPWM1 99
+#define atualizarPWM2 100
