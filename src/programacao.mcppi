@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=IHM.c
+Value=PWM.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -45,7 +45,11 @@ File0=programacao.c
 File1=interfaceSubMenuAlteracao.c
 File2=interfaceSubMenuAlteracao.h
 File3=IHM.c
-Count=4
+File4=ESP_I2C.c
+File5=verificacaoErros.c
+File6=leituraAD.c
+File7=PWM.c
+Count=8
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

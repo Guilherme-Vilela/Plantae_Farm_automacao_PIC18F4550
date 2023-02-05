@@ -18,6 +18,5 @@ void ligaCoolerAgua();
 void desligaCoolerAgua();
 void ligaResistenciaAgua();
 void desligaResistenciaAgua();
-void verificaAtuadores();
 void ligaLed();
 void desligaLed();

@@ -153,19 +153,19 @@ unsigned short int movimentaSubmenuAlteracoes(unsigned short int posicaoSubMenuA
   case 2: // menu de atuaodres
     switch (posicaoSubMenu)
     {
-    case subMenuMotorPrincipal: 
+    case subMenuMotorPrincipal:
       alterarPotenciaMotor(digito, &dutyCicle1);
       break;
-    case subMenuMotorAuxiliar: 
+    case subMenuMotorAuxiliar:
       alterarPotenciaMotor(digito, &dutyCicle1);
       break;
-    case subMenuLeds: 
+    case subMenuLeds:
       alterarPotenciaMotor(digito, &dutyCicle1);
       break;
-    case subMenuCoolerAmbiente: 
+    case subMenuCoolerAmbiente:
       alterarPotenciaMotor(digito, &dutyCicle1);
       break;
-    case subMenuCoolerAgua: 
+    case subMenuCoolerAgua:
       alterarPotenciaMotor(digito, &dutyCicle1);
       break;
     }
@@ -175,18 +175,18 @@ unsigned short int movimentaSubmenuAlteracoes(unsigned short int posicaoSubMenuA
 }
 int alteraPosicao(unsigned short int posicao, unsigned short int acao)
 {
-  if (acao.b0 != 0)
+  if (acao == avancarMenu)
   {
     posicao = posicao + 1;
   }
-  else if (acao.b1 != 0)
+  else if (acao == voltarMenu)
   {
     posicao = posicao - 1;
   }
 
   return posicao;
 }
-void movimentaMenu(char tecla)
+void movimentaMenu(char teclaPressionada)
 {
   static unsigned short int menuSelecionado = 0;
   static unsigned short int posicaoMenuPrincipal = 0;
@@ -195,32 +195,32 @@ void movimentaMenu(char tecla)
   unsigned short int digito = 10;
   unsigned short int acoesMenu = 0;
 
-  switch (tecla)
+  switch (teclaPressionada)
   {
   case botaoAvancar:
-    avancarMenu = 1;
+    acoesMenu = avancarMenu;
     break;
   case botaoVoltar:
-    voltarMenu = 1;
+    acoesMenu = voltarMenu;
     break;
   case botaoEntrar:
-    entrarMenu = 1;
+    acoesMenu = entrarMenu;
     break;
   case botaoSair:
-    sairMenu = 1;
+    acoesMenu = sairMenu;
     break;
   case botaoAtualizar:
     // atualiza informa��es da tela
     break;
   default:
-    if ((tecla - '0') >= 0 && (tecla - '0') < 10)
+    if ((teclaPressionada - '0') >= 0 && (teclaPressionada - '0') < 10)
     {
-      digito = tecla - '0';
+      digito = teclaPressionada - '0';
     }
     break;
   }
 
-  if (sairMenu)
+  if (acoesMenu == sairMenu)
   {
     if (subMenuAlteracoes != 0)
     {
@@ -235,7 +235,7 @@ void movimentaMenu(char tecla)
     }
   }
 
-  if (entrarMenu)
+  if (acoesMenu == entrarMenu)
   {
     if (subMenu == 1 && subMenuAlteracoes == 1)
     {

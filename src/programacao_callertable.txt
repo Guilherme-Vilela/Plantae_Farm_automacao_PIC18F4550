@@ -64,18 +64,6 @@ main
 		aceleraPWM1
 			PWM1_Set_Duty
 				Mul_16X16_U
-	ligaCoolerAmbiente
-		sendTopic
-			intToChar
-				Div_16x16_S
-					Div_16x16_S_L
-			I2C1_Is_Idle
-			I2C1_Start
-				I2C1_Is_Idle
-				____DoIFC
-			I2C1_Wr
-				____DoIFC
-			I2C1_Stop
 	verificaSensores
 		leituraDht11
 			startTimer1
@@ -109,6 +97,27 @@ main
 			leituraAnalogica
 				ADC_Read
 					Delay_22us
+		analisarVariaveis
+			verificarLeds
+				desligaLed
+				ligaLed
+			verificarTemperaturaAgua
+				Equals_Double
+				byte2double
+					NRM4032
+						SETFUN32
+						FIXSIGN32
+						SETFOV32
+						RES032
+				Compare_Double
+				ligaCoolerAgua
+				desligaCoolerAgua
+			verificarTemperatura
+				ligaCoolerAmbiente
+				desligaCoolerAmbiente
+			verificarCorrenteMotorPrincipal
+			verificarCorrenteCooler
+			verificarCorrenteCoolerAgua
 	startTimer0
 	atualizarInformacoes
 		movimentaMenu

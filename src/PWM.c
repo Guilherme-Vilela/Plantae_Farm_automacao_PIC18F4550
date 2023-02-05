@@ -29,7 +29,7 @@ void desligarPWM1(){
   PWM1_Stop();*/                     // Desliga PWM1
   MOTOR_1_TRIS = 0;
   MOTOR_1 =0;
-  sendTopic(topic, dutyCicle1);
+  //sendTopic(topic, dutyCicle1);
 
 }
 void desligarPWM2(){
@@ -40,7 +40,7 @@ char topic[5] = topicStatusMotorAuxiliar;
   PWM2_Stop();*/                     // Desliga PWM2
   MOTOR_2_TRIS = 0;
   MOTOR_2 =0;
-  sendTopic(topic, dutyCicle2);
+  //sendTopic(topic, dutyCicle2);
 }
 void iniciarPWM() {
 char topic[5] = topicStatusMotor;
@@ -55,7 +55,7 @@ char topic[5] = topicStatusMotor;
 
   /*MOTOR_1_TRIS = 0;
   MOTOR_1 =1;*/
-  //sendTopic(topic, dutyCicle1);
+  ////sendTopic(topic, dutyCicle1);
 }
 void iniciarPWM2(){
 char topic[5] = topicStatusMotorAuxiliar;
@@ -70,5 +70,5 @@ char topic[5] = topicStatusMotorAuxiliar;
   }*/
   MOTOR_2_TRIS = 0;
   MOTOR_2 =1;
-    sendTopic(topic, dutyCicle2);
+    //sendTopic(topic, dutyCicle2);
 }

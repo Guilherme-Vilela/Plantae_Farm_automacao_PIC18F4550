@@ -1,8 +1,8 @@
 //defines para saber o movimento do menu
-#define  avancarMenu            acoesMenu.b0
-#define  voltarMenu             acoesMenu.b1
-#define  entrarMenu             acoesMenu.b2
-#define  sairMenu               acoesMenu.b3
+#define  avancarMenu            1
+#define  voltarMenu             2
+#define  entrarMenu             3
+#define  sairMenu               4
 #define  enderecoTecladoEscrita        0x42
 #define  enderecoTecladoLeitura        0x43
 #define  configuracaoPortsIO      0x0f

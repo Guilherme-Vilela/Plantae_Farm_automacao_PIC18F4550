@@ -67,13 +67,9 @@ void verificaSensores()
 {
   leituraDht11(&umidade, &temperatura); // leitura de valores DHT11
   leituraDs18b20(&temperaturaAgua);     // LEITURA TEMPERATURA DA �GUA
-
   leituraPortasAnalogicas(); // faz a leitura das 9 entradas analogicas
-  //  ligaResistenciaAmbiente();
-  //  analisarSensores();
-  //  ligaCoolerAgua();
 
-  //   verificaAtuadores();
+  analisarVariaveis();
   //  verificarErros();           //VALIDA��O DE ERROS
 }
 void atualizarInformacoes()
@@ -196,7 +192,6 @@ void main()
 
   iniciaTeclado();
   iniciarPWM();
-  ligaCoolerAmbiente();
   verificaSensores();
 
   startTimer0();

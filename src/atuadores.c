@@ -5,54 +5,48 @@
 //FUN��ES DE AMBIENTE
 void ligaCoolerAmbiente(){
  char topic[5] = topicStatusCoolerPlanta;
- sendTopic(topic, 1);
+ //sendTopic(topic, 1);
  COOLER_AMBIENTE_TRIS = 0;
- COOLER_AMBIENTE = 1;
+ COOLER_AMBIENTE = 0;           //logica invertida
 }
 void desligaCoolerAmbiente(){
  char topic[5] = topicStatusCoolerPlanta;
- sendTopic(topic, 0);
+ //sendTopic(topic, 0);
  COOLER_AMBIENTE_TRIS = 0;
- COOLER_AMBIENTE = 0;
+ COOLER_AMBIENTE = 1;         //logica invertida
 }
 void ligaResistenciaAmbiente(){
  char topic[5] = topicResistencia;
- sendTopic(topic, 1);
+ //sendTopic(topic, 1);
  RESISTENCIA_TRIS_AMBIENTE = 0;
- RESISTENCIA_AMBIENTE = 1;
+ RESISTENCIA_AMBIENTE = 0;    //logica invertida
 }
 void desligaResistenciaAmbiente(){
  char topic[5] = topicResistencia;
- sendTopic(topic, 0);
+ //sendTopic(topic, 0);
  RESISTENCIA_TRIS_AMBIENTE = 0;
- RESISTENCIA_AMBIENTE = 0;
+ RESISTENCIA_AMBIENTE = 1;   //logica invertida
 }
 //FUN��ES DE AMBIENTE
 
-//FUN��ES DE AGUA
+
 void ligaCoolerAgua(){
 char topic[5] = topicStatusCoolerAgua;
- sendTopic(topic, 1);
+ //sendTopic(topic, 1);
  COOLER_AGUA_TRIS = 0;
- COOLER_AGUA = 1;
+ COOLER_AGUA = 0;        //logica invertida
 }
 void desligaCoolerAgua(){
  char topic[5] = topicStatusCoolerAgua;
- sendTopic(topic, 0);
+ //sendTopic(topic, 0);
  COOLER_AGUA_TRIS = 0;
- COOLER_AGUA = 0;
+ COOLER_AGUA = 1;    //logica invertida
 }
 
-
-//FUNCOES DE AGUA
-//FUNCOES DOS LEDS
 void ligaLed(){
 char topic[5] = topicStatusLeds;
- sendTopic(topic, 1);
+ //sendTopic(topic, 1);
 //   stopTimer0();
-   vermelho();
-   azul();
-   vermelho();
   /*azul();
    vermelho();
    azul();
@@ -61,13 +55,12 @@ char topic[5] = topicStatusLeds;
   /*T0CON = 0x87;*/
 
 }
+
 void desligaLed(){
 char topic[5] = topicStatusLeds;
-sendTopic(topic, 0);
+//sendTopic(topic, 0);
 //stopTimer0();
-    preto();
-    preto();
-    preto();
+   
   /*preto();
     preto();
     preto();
