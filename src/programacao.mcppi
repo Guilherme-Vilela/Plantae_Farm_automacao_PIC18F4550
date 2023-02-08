@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=PWM.c
+Value=programacao.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -48,8 +48,7 @@ File3=IHM.c
 File4=ESP_I2C.c
 File5=verificacaoErros.c
 File6=leituraAD.c
-File7=PWM.c
-Count=8
+Count=7
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -103,7 +102,7 @@ Count=3
 385=PWM
 408=Software_SPI
 881=Time
-Count=6
+Count=7
 [PROGRAMMER_TYPE]
 Value=mikroE mikroProg
 [CODEGRIP_OPTIONS]

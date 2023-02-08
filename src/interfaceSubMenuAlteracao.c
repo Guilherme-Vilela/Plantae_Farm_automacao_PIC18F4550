@@ -145,7 +145,7 @@ void alterarPotenciaMotor(unsigned short int digitoPressionado, unsigned short i
       *dutyCicle = (int)((dezena * 10) + unidade) * 255 / 100;
     }
     resetarAcoesSubMenuAlteracao();
-    atualizar = 1;
+    atualizar = atualizarPWM1;
   }
   LCD_Cursor();
   LCD_Out(1, 1, "Motor em: ");
