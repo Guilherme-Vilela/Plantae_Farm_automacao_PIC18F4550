@@ -88,15 +88,15 @@ void leituraTeclado(){
 
 }
 void verificaTecladoSolto(){
- unsigned short valorRecebido = 0;
+ unsigned short digitoPressionado = 0;
   I2C1_Start();                //I       INICIA COMUNICA��O I2C
   while(I2C1_Is_Idle() == 0){};  //VERIFICA SE BARRAMENTO FOI LIBERADO
   I2C1_Wr( 0x41 );        //ENVIA ENDERE�O DO DISPOSITVO ESCRAVO E COMANDO DE LEITURA
   while(I2C1_Is_Idle() == 0){};  //VERIFICA SE BARRAMENTO FOI LIBERADO
-  valorRecebido = I2C1_Rd(0); //ARMAZENA DADOS DE LEITURA EM COLUNA
+  digitoPressionado = I2C1_Rd(0); //ARMAZENA DADOS DE LEITURA EM COLUNA
   while(I2C1_Is_Idle() == 0){};  //VERIFICA SE BARRAMENTO FOI LIBERADO
   I2C1_Stop();                   //FINALIZA COMUNICA��O I2C
-  if(valorRecebido == 15){        //VERIFICA SE O TECLADO FOI SOLTO
+  if(digitoPressionado == 15){        //VERIFICA SE O TECLADO FOI SOLTO
     flagStatusTeclado = 1;            //LIBERA BIT PARA PODER INCIAR UMA NOVA LEITURA DE TECLADO
   }
 

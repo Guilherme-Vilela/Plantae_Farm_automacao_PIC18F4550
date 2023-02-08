@@ -105,7 +105,7 @@ adresh
 adresl
 alteraposicao
 alterarpotenciamotor
-alteravalorsubmenutemperaturaamb
+alteravalormaxminsubmenusensores
 alteravariavel
 an0
 an0_bit
@@ -117,8 +117,9 @@ an3
 an3_bit
 an4
 an4_bit
-analisarsensores
-atualizamenu
+analisarvariaveis
+atualizar
+atualizarinformacoes
 b0
 b1
 b2
@@ -809,16 +810,16 @@ lvv3
 lvv3_bit
 main
 mensagemexibidaa
-menuatuadores_3
+menuatuadores_2
 menuatuadorescooleragua_4
 menuatuadorescoolerambiente_3
 menuatuadoresleds_2
 menuatuadoresmotorauxiliar_1
 menuatuadoresmotorprincipal_0
-menucultivo_1
-menuplanta_4
-menurede_5
-menusensores_2
+menucultivo_0
+menuplanta_3
+menurede_4
+menusensores_1
 menusensoresluminosidade_4
 menusensoresph_3
 menusensorestempagua_2
@@ -828,6 +829,7 @@ movimentamenu
 movimentarmenuprincipal
 movimentasubmenu
 movimentasubmenualteracoes
+movimentateste
 mul_16x16_s
 mul_16x16_u
 mul_32x32_fp
@@ -1175,7 +1177,6 @@ scs1_bit
 sdiv3232l
 se0
 se0_bit
-semaguacano
 sen
 sen_bit
 sendb
@@ -1360,7 +1361,6 @@ tblptr
 tblptrh
 tblptrl
 tblptru
-teclapressionada
 temperatura
 temperaturaagua
 temperaturaaguamax

@@ -11,16 +11,16 @@
 #include "timer.h"
 #include "verificacaoErros.h"
 #include "PWM.h"
-//#include "plantas.h"
+// #include "plantas.h"
 //******************************************************************************
-//   VOID DE INTERRUP��ES
+//    VOID DE INTERRUP��ES
 //**************************0****************************************************
 
 void interrupt(void)
 { // Interrup��es de alta prioridade
- if (INTCON.TMR0IF)
+  if (INTCON.TMR0IF)
   {
-      timer0++;
+    timer0++;
     INTCON.TMR0IF = 0;
   }
   if (INTCON.RBIF)
@@ -51,14 +51,13 @@ void interrupt(void)
     PIR1.TMR1IF = 0;
   }
 
- if (PIR1.ADIF)
+  if (PIR1.ADIF)
   {
     PIR1.ADIF = 0;
   }
 }
 void interrupt_low(void)
 { // Interrup��es de baixa prioridade
-
 }
 
 //******************************************************************************
@@ -68,14 +67,37 @@ void verificaSensores()
 {
   leituraDht11(&umidade, &temperatura); // leitura de valores DHT11
   leituraDs18b20(&temperaturaAgua);     // LEITURA TEMPERATURA DA �GUA
-
   leituraPortasAnalogicas(); // faz a leitura das 9 entradas analogicas
-//  ligaResistenciaAmbiente();
-//  analisarSensores();
-//  ligaCoolerAgua();
 
-//   verificaAtuadores();
+  analisarVariaveis();
   //  verificarErros();           //VALIDA��O DE ERROS
+}
+void atualizarInformacoes()
+{
+  switch (atualizar)
+  {
+  case atualizaMenuEntrar:
+    movimentaMenu('A');
+    break;
+  case atualizaMenuSair:
+    movimentaMenu('B');
+    break;
+  case atualizaMenuAvancar:
+    movimentaMenu('C');
+    break;
+  case atualizaMenuVoltar:
+    movimentaMenu('D');
+    break;
+  case atualizaLCD:
+    movimentaMenu('X');
+    break;
+  case atualizarPWM1:
+    setPWM1();
+    break;
+  default:
+    break;
+  }
+  atualizar = 0;
 }
 void I2C1_TimeoutCallback(char errorCode)
 {
@@ -104,7 +126,7 @@ void I2C1_TimeoutCallback(char errorCode)
 }
 void main()
 {
-delay_ms(500);
+  delay_ms(500);
   //******************************************************************************
   //   CONFIGURA��ES DE INTERRUP��O
   //******************************************************************************
@@ -158,7 +180,7 @@ delay_ms(500);
   //   Inicializa��o
   //******************************************************************************
 
-//  flagLeituraTeclado = 0;
+  //  flagLeituraTeclado = 0;
   I2C1_Init(100000); // Inicializa comunica��o I2C
   I2C1_SetTimeoutCallback(100, I2C1_TimeoutCallback);
   // set timeout period and callback function
@@ -170,25 +192,22 @@ delay_ms(500);
 
   iniciaTeclado();
   iniciarPWM();
-  ligaCoolerAmbiente();
   verificaSensores();
 
   startTimer0();
   delay_ms(100);
-  for (;;)// LOOP
+  for (;;) // LOOP
   {
     if (timer0 > 10)
     {
       timer0 = 0;
-      //erroI2c = 0;
+      // erroI2c = 0;
       verificaSensores(); // VALIDA��O DE ERROS
-      atualizaMenu =1;
+      atualizar = atualizaLCD;
     }
-   if (atualizaMenu)
+    if (atualizar > 0)
     {
-    movimentaMenu('X');
-    atualizaMenu = 0;
-    setPWM1();
+      atualizarInformacoes();
     }
     verificaPressionamentoTeclado();
 

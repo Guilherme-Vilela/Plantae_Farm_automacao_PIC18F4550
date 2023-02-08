@@ -8,7 +8,7 @@ void verificarLeds()
   char topic[5] = topicLuminosidade;
 
   // envia luminosidade para o ESP publicar
-  //sendTopic(topic, luminosidade);
+  ////sendTopic(topic, luminosidade);
 
   if (luminosidade >= luminosidadeMAX)
   {
@@ -22,53 +22,75 @@ void verificarLeds()
 void verificarTemperaturaAgua()
 {
   char topic[5] = topicTemperaturaAgua;
-  // envia luminosidade para o ESP publicar
-  sendTopic(topic, temperaturaAgua);
-
-  if (temperaturaAgua >= temperaturaAguaMAX)
+  unsigned short int temperaturaIdeal = 0;
+  // sendTopic(topic, temperaturaAgua);
+  if (temperaturaAgua != 99)
   {
-    ligaCoolerAgua();
-  }
-  else if (temperaturaAgua <= temperaturaAguaMIN)
-  {
-    desligaCoolerAgua();
+    temperaturaIdeal = (temperaturaAguaMAX + temperaturaAguaMIN) / 2;
+    if (temperaturaAgua > temperaturaIdeal)
+    {
+      ligaCoolerAgua();
+    }
+    else if (temperaturaAgua == temperaturaIdeal)
+    {
+      // desligaResistencia();
+      desligaCoolerAgua();
+    }
+    else if (temperaturaAgua < temperaturaIdeal)
+    {
+      // ligaResistencia();
+      desligaCoolerAgua();
+    }
   }
 }
 void verificarTemperatura()
 {
   char topic[5] = topicTemperatura;
   // envia luminosidade para o ESP publicar
-  sendTopic(topic, temperatura);
-
-  if (temperatura >= temperaturaMAX)
+  // sendTopic(topic, temperatura);
+  unsigned short int temperaturaIdeal = 0;
+  if (temperatura != 99)
   {
-    ligaCoolerAmbiente();
-  }
-  else if (temperatura <= temperaturaMIN)
-  {
-    desligaCoolerAmbiente();
+    temperaturaIdeal = (temperaturaMAX + temperaturaMIN) / 2;
+    if (temperatura > temperaturaIdeal)
+    {
+      ligaCoolerAmbiente();
+    }
+    else if (temperatura == temperaturaIdeal)
+    {
+      desligaCoolerAmbiente();
+    }
+    else if (temperatura < temperaturaIdeal)
+    {
+      desligaCoolerAmbiente();
+    }
   }
 }
 void verificarUmidade()
 {
   char topic[5] = topicUmidade;
   // envia luminosidade para o ESP publicar
-  sendTopic(topic, umidade);
-
-  if (umidade >= umidadeMAX)
-  {
-    // enviar mensagem de erro ou setar bit
-  }
-  else if (umidade <= umidadeMIN)
-  {
-    // enviar mensagem de erro ou setar bit
-  }
+  // sendTopic(topic, umidade);
+  // unsigned short int umidadeIdeal = 0;
+  // umidadeIdeal = (umidadeMAX+umidadeMIN)/2;
+  // if (umidade >= umidadeIdeal)
+  // {
+  //   // enviar mensagem de erro ou setar bit
+  // }
+  // else if (umidade == umidadeIdeal)
+  // {
+  //   // enviar mensagem de erro ou setar bit
+  // }
+  // else if (umidade <= umidadeIdeal)
+  // {
+  //   // enviar mensagem de erro ou setar bit
+  // }
 }
 void verificarPh()
 {
   char topic[5] = topicPh;
   // envia luminosidade para o ESP publicar
-  sendTopic(topic, ph);
+  // sendTopic(topic, ph);
 
   //       if(ph >= phMAX){
   // enviar mensagem de erro ou setar bit
@@ -80,7 +102,7 @@ void verificarTensaoBateria()
 {
   char topic[5] = topicTensaoBateria;
   // envia luminosidade para o ESP publicar
-  sendTopic(topic, tensaoBateria);
+  // sendTopic(topic, tensaoBateria);
 
   if (tensaoBateria <= tensaoBateriaMIN)
   {
@@ -91,7 +113,7 @@ void verificarCorrenteLeds()
 {
   char topic[5] = topicCorrenteLeds;
   // envia luminosidade para o ESP publicar
-  sendTopic(topic, correnteLeds);
+  // sendTopic(topic, correnteLeds);
 
   if (correnteLeds >= correnteLedsMAX)
   {
@@ -102,7 +124,7 @@ void verificarNivelAgua()
 {
   char topic[5] = topicNivelAgua;
   // envia luminosidade para o ESP publicar
-  sendTopic(topic, nivelAgua);
+  // sendTopic(topic, nivelAgua);
   if (nivelAgua <= nivelAguaMIN)
   {
     // enviar mensagem de erro ou setar bit
@@ -116,7 +138,7 @@ void verificarCorrenteMotorAuxiliar()
 {
   char topic[5] = topicCorrenteMotorAuxiliar;
   // envia luminosidade para o ESP publicar
-  sendTopic(topic, correnteMotorAuxiliar);
+  // sendTopic(topic, correnteMotorAuxiliar);
 
   if (correnteMotorAuxiliar >= correnteMotorAuxiliarMAX)
   {
@@ -128,7 +150,7 @@ void verificarCorrenteMotorPrincipal()
 
   char topic[5] = topicCorrenteMotor;
   // envia luminosidade para o ESP publicar
-  sendTopic(topic, correnteMotorPrincipal);
+  // sendTopic(topic, correnteMotorPrincipal);
 
   if (correnteMotorPrincipal >= correnteMotorPrincipalMAX)
   {
@@ -139,7 +161,7 @@ void verificarCorrenteCooler()
 {
   char topic[5] = topicCorrenteCoolerPlanta;
   // envia luminosidade para o ESP publicar
-  sendTopic(topic, correnteCooler);
+  // sendTopic(topic, correnteCooler);
   if (correnteCooler >= correnteCoolerMAX)
   {
     // enviar mensagem de erro ou setar bit
@@ -149,23 +171,23 @@ void verificarCorrenteCoolerAgua()
 {
   char topic[5] = topicCorrenteCoolerAgua;
   // envia luminosidade para o ESP publicar
-  sendTopic(topic, correnteCoolerAgua);
+  // sendTopic(topic, correnteCoolerAgua);
   if (correnteCoolerAgua >= correnteCoolerAguaMAX)
   {
     // enviar mensagem de erro ou setar bit
   }
 }
-void analisarSensores()
+void analisarVariaveis()
 {
   verificarLeds();
   verificarTemperaturaAgua();
   verificarTemperatura();
-  verificarUmidade();
-  verificarPh();
-  verificarTensaoBateria();
-  verificarCorrenteLeds();
-  verificarNivelAgua();
-  verificarCorrenteMotorAuxiliar();
+  // verificarUmidade();
+  // verificarPh();
+  // verificarTensaoBateria();
+  // verificarCorrenteLeds();
+  // verificarNivelAgua();
+  // verificarCorrenteMotorAuxiliar();
   verificarCorrenteMotorPrincipal();
   verificarCorrenteCooler();
   verificarCorrenteCoolerAgua();
@@ -248,7 +270,7 @@ LCD_Out(2,1,mesagem);
     erroTemperatura.b3 =0;
    }
    if(mensagemExibida == 0){
-    atualizaMenu = 1;
+    atualizar = 1;
    }
 }*/
 void resetaMensagemErro()

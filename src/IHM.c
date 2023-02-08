@@ -20,23 +20,28 @@ unsigned short int movimentarMenuPrincipal(unsigned short int posicao)
   }
   switch (posicao)
   {
-  case 0:
-    menuCultivo_1();
+  case menuCultivo:
+    menuCultivo_0();
     break;
-  case 1:
-    menuSensores_2();
+  case menuSensores:
+    menuSensores_1();
     break;
-  case 2:
-    menuAtuadores_3();
+  case menuAtuadores:
+    menuAtuadores_2();
     break;
-  case 3:
-    menuPlanta_4();
+  case menuPlanta:
+    menuPlanta_3();
     break;
-  case 4:
-    menuRede_5();
+  case menuRede:
+    menuRede_4();
     break;
   }
   return posicao;
+}
+void movimentaTeste(int menu, int submenu, int submenuteste)
+{
+  int posicoes[3];
+#define posicao menu
 }
 
 unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned short int posicaoMenu)
@@ -56,7 +61,7 @@ unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned 
   }
   switch (posicaoMenu)
   {
-  case 0: // menu1 de cultivo e seus derivados
+  case menuCultivo: // menu1 de cultivo e seus derivados
     switch (posicaoSubMenu)
     {
     case 0:
@@ -67,42 +72,42 @@ unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned 
     }
     break;
 
-  case 1: // menu2 de sensores e seus derivados
+  case menuSensores: // menu2 de sensores e seus derivados
     switch (posicaoSubMenu)
     {
-    case 0:
-      menuSensoresTempAgua_2();
-      break;
-    case 1:
-      menuSensoresUmidade_1();
-      break;
-    case 2:
+    case subMenuTemperaturaAmb:
       menuSensoresTempAmb_0();
       break;
-    case 3:
+    case subMenuUmidade:
+      menuSensoresUmidade_1();
+      break;
+    case subMenuTemperaturaAgua:
+      menuSensoresTempAgua_2();
+      break;
+    case subMenuPH:
       menuSensoresPH_3();
       break;
-    case 4:
+    case subMenuLuminosidade:
       menuSensoresLuminosidade_4();
       break;
     }
     break;
-  case 2: // menu2 de Atuadores_3
+  case menuAtuadores: // menu2 de Atuadores_3
     switch (posicaoSubMenu)
     {
-    case 0:
+    case subMenuMotorPrincipal: // SUB MENU TEMPERATURA AMB
       menuAtuadoresMotorPrincipal_0();
       break;
-    case 1:
+    case subMenuMotorAuxiliar: // SUB MENU TEMPERATURA AMB
       menuAtuadoresMotorAuxiliar_1();
       break;
-    case 2:
+    case subMenuLeds: // SUB MENU TEMPERATURA AMB
       menuAtuadoresLeds_2();
       break;
-    case 3:
+    case subMenuCoolerAmbiente: // SUB MENU TEMPERATURA AMB
       menuAtuadoresCoolerAmbiente_3();
       break;
-    case 4:
+    case subMenuCoolerAgua: // SUB MENU TEMPERATURA AMB
       menuAtuadoresCoolerAgua_4();
       break;
     }
@@ -123,54 +128,65 @@ unsigned short int movimentaSubmenuAlteracoes(unsigned short int posicaoSubMenuA
   }
   switch (posicaoMenu)
   {
-  case 0: //menu de cultivo
-  case 1: // menu SENSORES
+  case menuCultivo: // menu de cultivo
+    break;
+  case menuSensores: // menu SENSORES
     switch (posicaoSubMenu)
     {
-    case 0: // SUB MENU TEMPERATURA AMB
-      if (posicaoSubMenuAlteracao == 0)
-      {
-        alteraValorSubMenuTemperaturaAmb(digito);
-        LCD_Clear();
-        LCD_Out(2, 1, "23");
-      }
+    case subMenuTemperaturaAmb: // SUB MENU TEMPERATURA AMB
+      alteraValorMaxMinSubMenuSensores(digito, subMenuTemperaturaAmb);
       break;
-    case 1: // SUB MENU TEMPERATURA AMB
-      LCD_Clear();
-      LCD_Out(1, 1, "SUB MENU");
-      LCD_Out(2, 1, "22");
+    case subMenuUmidade:
+      alteraValorMaxMinSubMenuSensores(digito, subMenuUmidade);
       break;
-    case 2:
-      LCD_Clear();
-      LCD_Out(1, 1, "SUB MENU");
-      LCD_Out(2, 1, "23");
+    case subMenuTemperaturaAgua:
+      alteraValorMaxMinSubMenuSensores(digito, subMenuTemperaturaAgua);
+      break;
+    case subMenuPH:
+      alteraValorMaxMinSubMenuSensores(digito, subMenuPH);
+      break;
+    case subMenuLuminosidade:
+      alteraValorMaxMinSubMenuSensores(digito, subMenuLuminosidade);
       break;
     }
     break;
-   case 2: //menu de atuaodres
-   switch (posicaoSubMenu){
-    case 0: // SUB MENU TEMPERATURA AMB
-
-        alterarPotenciaMotor(digito,&dutyCicle1);
-   }
-   break;
+  case 2: // menu de atuaodres
+    switch (posicaoSubMenu)
+    {
+    case subMenuMotorPrincipal:
+      alterarPotenciaMotor(digito, &dutyCicle1);
+      break;
+    case subMenuMotorAuxiliar:
+      alterarPotenciaMotor(digito, &dutyCicle1);
+      break;
+    case subMenuLeds:
+      alterarPotenciaMotor(digito, &dutyCicle1);
+      break;
+    case subMenuCoolerAmbiente:
+      alterarPotenciaMotor(digito, &dutyCicle1);
+      break;
+    case subMenuCoolerAgua:
+      alterarPotenciaMotor(digito, &dutyCicle1);
+      break;
+    }
+    break;
   }
   return posicaoSubMenuAlteracao;
 }
 int alteraPosicao(unsigned short int posicao, unsigned short int acao)
 {
-  if (acao.b0 != 0)
+  if (acao == avancarMenu)
   {
     posicao = posicao + 1;
   }
-  else if (acao.b1 != 0)
+  else if (acao == voltarMenu)
   {
     posicao = posicao - 1;
   }
 
   return posicao;
 }
-void movimentaMenu(char tecla)
+void movimentaMenu(char teclaPressionada)
 {
   static unsigned short int menuSelecionado = 0;
   static unsigned short int posicaoMenuPrincipal = 0;
@@ -178,33 +194,33 @@ void movimentaMenu(char tecla)
   static unsigned short int posicaoSubMenuAlteracoes = 0;
   unsigned short int digito = 10;
   unsigned short int acoesMenu = 0;
-        
-  switch (tecla)
+
+  switch (teclaPressionada)
   {
-  case botaoVoltar:
-    avancarMenu = 1;
-    break;
   case botaoAvancar:
-    voltarMenu = 1;
+    acoesMenu = avancarMenu;
+    break;
+  case botaoVoltar:
+    acoesMenu = voltarMenu;
     break;
   case botaoEntrar:
-    entrarMenu = 1;
+    acoesMenu = entrarMenu;
     break;
   case botaoSair:
-    sairMenu = 1;
+    acoesMenu = sairMenu;
     break;
   case botaoAtualizar:
     // atualiza informa��es da tela
     break;
   default:
-    if ((tecla - '0') >= 0 && (tecla - '0') < 10)
+    if ((teclaPressionada - '0') >= 0 && (teclaPressionada - '0') < 10)
     {
-      digito = tecla - '0';
+      digito = teclaPressionada - '0';
     }
     break;
   }
 
-  if (sairMenu)
+  if (acoesMenu == sairMenu)
   {
     if (subMenuAlteracoes != 0)
     {
@@ -219,11 +235,12 @@ void movimentaMenu(char tecla)
     }
   }
 
-  if (entrarMenu)
+  if (acoesMenu == entrarMenu)
   {
-   if(subMenu == 1 && subMenuAlteracoes == 1){
-     digito = 65;
-   }
+    if (subMenu == 1 && subMenuAlteracoes == 1)
+    {
+      digito = 65;
+    }
     else if (subMenu != 0)
     {
       subMenuAlteracoes = 1;
@@ -346,7 +363,7 @@ void leituraTeclado()
 ////////////////////////////////////////////////////////////////////////////////////
 void verificaTecladoSolto()
 {
-  unsigned short valorRecebido = 0;
+  unsigned short digitoPressionado = 0;
 
   while (I2C1_Is_Idle() == 0)
   {
@@ -354,9 +371,9 @@ void verificaTecladoSolto()
 
   I2C1_Start();                    // I       INICIA COMUNICA��O I2C
   I2C1_Wr(enderecoTecladoLeitura); // ENVIA ENDERE�O DO DISPOSITVO ESCRAVO E COMANDO DE LEITURA
-  valorRecebido = I2C1_Rd(0);      // ARMAZENA DADOS DE LEITURA EM COLUNA
+  digitoPressionado = I2C1_Rd(0);  // ARMAZENA DADOS DE LEITURA EM COLUNA
   I2C1_Stop();                     // FINALIZA COMUNICA��O I2C
-  if (valorRecebido == 15)
+  if (digitoPressionado == 15)
   {                        // VERIFICA SE O TECLADO FOI SOLTO
     flagStatusTeclado = 0; // LIBERA BIT PARA PODER INCIAR UMA NOVA LEITURA DE TECLADO
   }

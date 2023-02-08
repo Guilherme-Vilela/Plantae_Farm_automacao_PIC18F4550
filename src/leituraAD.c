@@ -21,5 +21,6 @@ void leituraPortasAnalogicas()
      leituraAnalogica(&ph,PIN_SENSOR_PH,0);
      leituraAnalogica(&luminosidade,PIN_LDR,0);
      leituraAnalogica(&correnteCooler,PIN_CORRENTE_COOLER,512);
+     CCP2CON = 0b00001011;
      leituraAnalogica(&correnteCoolerAgua,PIN_CORRENTE_COOLER_AGUA,512);
 }
