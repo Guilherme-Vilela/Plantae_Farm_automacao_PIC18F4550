@@ -2,6 +2,8 @@
 #include "LCD_I2C.h"
 #include "global.h"
 #include "conversao.h"
+#include "atuadores.h"
+
 static unsigned short int etapaConversao = 0;
 static unsigned short int milhar = 0, centena = 0, dezena = 0, unidade = 0;
 void alteraVariavel(unsigned short int *valorMin, unsigned short int *valorMax, unsigned short int digitoPressionado)
@@ -87,19 +89,19 @@ void alteraValorMaxMinSubMenuSensores(unsigned short int digitoPressionado, unsi
 {
   switch (posicaoSubmenu)
   {
-  case subMenuTemperaturaAmb:
+  case SUBMENU_TEMPERATURA_AMBIENTE:
     alteraVariavel(&temperaturaMIN, &temperaturaMAX, digitoPressionado);
     break;
-  case subMenuUmidade:
+  case SUBMENU_UMIDADE:
     alteraVariavel(&umidadeMIN, &umidadeMAX, digitoPressionado);
     break;
-  case subMenuTemperaturaAgua:
+  case SUBMENU_TEMPERATURA_AGUA:
     alteraVariavel(&temperaturaAguaMIN, &temperaturaAguaMAX, digitoPressionado);
     break;
-  case subMenuPH:
+  case SUBMENU_PH:
     alteraVariavel(&phMIN, &phMAX, digitoPressionado);
     break;
-  case subMenuLuminosidade:
+  case SUBMENU_LUMINOSIDADE:
     alteraVariavel(&luminosidadeMIN, &luminosidadeMAX, digitoPressionado);
     break;
   }
@@ -112,6 +114,7 @@ void resetarAcoesSubMenuAlteracao()
   unidade = 0;
   LCD_NoCursor();
 }
+
 void alterarPotenciaMotor(unsigned short int digitoPressionado, unsigned short int *dutyCicle)
 {
   int potenciaEmPorcentagem;
@@ -146,6 +149,7 @@ void alterarPotenciaMotor(unsigned short int digitoPressionado, unsigned short i
     }
     resetarAcoesSubMenuAlteracao();
     atualizar = atualizarPWM1;
+    modoFuncionamento = MANUAL;
   }
   LCD_Cursor();
   LCD_Out(1, 1, "Motor em: ");
@@ -174,4 +178,76 @@ void alterarPotenciaMotor(unsigned short int digitoPressionado, unsigned short i
     LCD_Set_Cursor(2, 16);
     break;
   }
+}
+
+void alternarEstadoAtuadores(unsigned short int digitoPressionado, unsigned short int atuador, char atuadorNome[10])
+{
+  unsigned short int estado;
+
+  switch (atuador)
+  {
+  case ATUADOR_LED:
+    if (digitoPressionado == 65)
+    {
+      PIN_LED = unidade;
+    }
+    estado = PIN_LED;
+    break;
+  case ATUADOR_COOLER_AMBIENTE:
+    if (digitoPressionado == 65)
+    {
+      COOLER_AMBIENTE = unidade;
+    }
+    estado = COOLER_AMBIENTE;
+    break;
+  case ATUADOR_COOLER_AGUA:
+    if (digitoPressionado == 65)
+    {
+      COOLER_AGUA = unidade;
+    }
+    estado = COOLER_AGUA;
+
+    break;
+  case ATUADOR_RESISTENCIA:
+    if (digitoPressionado == 65)
+    {
+      RESISTENCIA_AMBIENTE = unidade;
+    }
+    estado = RESISTENCIA_AMBIENTE;
+    break;
+  }
+  if (digitoPressionado == 65)
+  {
+    modoFuncionamento = MANUAL;
+    atualizar = atualizaMenuSair;
+  }
+
+  LCD_Clear();
+  LCD_Cursor();
+  LCD_Out(1, 1, atuadorNome);
+  LCD_Out(1, 11, ":");
+  LCD_Out(2, 1, "PRESSIONE 1||0");
+  if (estado && dezena == 0)
+  {
+    LCD_Out(1, 13, "OFF");
+    unidade = 1;
+    dezena++;
+  }
+  else if (!estado && dezena == 0)
+  {
+    LCD_Out(1, 13, "ON");
+    unidade = 0;
+    dezena++;
+  }
+  else if (digitoPressionado == 1)
+  {
+    LCD_Out(1, 13, "ON");
+    unidade = 0;
+  }
+  else if (digitoPressionado == 0)
+  {
+    LCD_Out(1, 13, "OFF");
+    unidade = 1;
+  }
+  LCD_Chr(2, 16, 'A');
 }

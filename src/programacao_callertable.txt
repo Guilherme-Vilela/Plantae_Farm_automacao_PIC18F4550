@@ -99,8 +99,6 @@ main
 					Delay_22us
 		analisarVariaveis
 			verificarLeds
-				desligaLed
-				ligaLed
 			verificarTemperaturaAgua
 				Equals_Double
 				byte2double
@@ -111,10 +109,14 @@ main
 						RES032
 				Compare_Double
 				ligaCoolerAgua
+					verificarSolicitante
 				desligaCoolerAgua
+					verificarSolicitante
 			verificarTemperatura
 				ligaCoolerAmbiente
+					verificarSolicitante
 				desligaCoolerAmbiente
+					verificarSolicitante
 			verificarCorrenteMotorPrincipal
 			verificarCorrenteCooler
 			verificarCorrenteCoolerAgua
@@ -1330,6 +1332,67 @@ main
 									I2C1_Stop
 					LCD_Set_Cursor
 						LCD_CMD
+							LCD_WRITE_4Bit
+								LCD_WRITE
+									I2C1_Start
+										I2C1_Is_Idle
+										____DoIFC
+									I2C1_Wr
+										____DoIFC
+									I2C1_Stop
+				alternarEstadoAtuadores
+					LCD_Clear
+						LCD_CMD
+							LCD_WRITE_4Bit
+								LCD_WRITE
+									I2C1_Start
+										I2C1_Is_Idle
+										____DoIFC
+									I2C1_Wr
+										____DoIFC
+									I2C1_Stop
+					LCD_Cursor
+						LCD_CMD
+							LCD_WRITE_4Bit
+								LCD_WRITE
+									I2C1_Start
+										I2C1_Is_Idle
+										____DoIFC
+									I2C1_Wr
+										____DoIFC
+									I2C1_Stop
+					LCD_Out
+						LCD_Set_Cursor
+							LCD_CMD
+								LCD_WRITE_4Bit
+									LCD_WRITE
+										I2C1_Start
+											I2C1_Is_Idle
+											____DoIFC
+										I2C1_Wr
+											____DoIFC
+										I2C1_Stop
+						LCD_WRITE_Char
+							LCD_WRITE_4Bit
+								LCD_WRITE
+									I2C1_Start
+										I2C1_Is_Idle
+										____DoIFC
+									I2C1_Wr
+										____DoIFC
+									I2C1_Stop
+					LCD_Chr
+						LCD_Set_Cursor
+							LCD_CMD
+								LCD_WRITE_4Bit
+									LCD_WRITE
+										I2C1_Start
+											I2C1_Is_Idle
+											____DoIFC
+										I2C1_Wr
+											____DoIFC
+										I2C1_Stop
+						LCD_WRITE_Char
 							LCD_WRITE_4Bit
 								LCD_WRITE
 									I2C1_Start
@@ -2579,6 +2642,67 @@ main
 										I2C1_Stop
 						LCD_Set_Cursor
 							LCD_CMD
+								LCD_WRITE_4Bit
+									LCD_WRITE
+										I2C1_Start
+											I2C1_Is_Idle
+											____DoIFC
+										I2C1_Wr
+											____DoIFC
+										I2C1_Stop
+					alternarEstadoAtuadores
+						LCD_Clear
+							LCD_CMD
+								LCD_WRITE_4Bit
+									LCD_WRITE
+										I2C1_Start
+											I2C1_Is_Idle
+											____DoIFC
+										I2C1_Wr
+											____DoIFC
+										I2C1_Stop
+						LCD_Cursor
+							LCD_CMD
+								LCD_WRITE_4Bit
+									LCD_WRITE
+										I2C1_Start
+											I2C1_Is_Idle
+											____DoIFC
+										I2C1_Wr
+											____DoIFC
+										I2C1_Stop
+						LCD_Out
+							LCD_Set_Cursor
+								LCD_CMD
+									LCD_WRITE_4Bit
+										LCD_WRITE
+											I2C1_Start
+												I2C1_Is_Idle
+												____DoIFC
+											I2C1_Wr
+												____DoIFC
+											I2C1_Stop
+							LCD_WRITE_Char
+								LCD_WRITE_4Bit
+									LCD_WRITE
+										I2C1_Start
+											I2C1_Is_Idle
+											____DoIFC
+										I2C1_Wr
+											____DoIFC
+										I2C1_Stop
+						LCD_Chr
+							LCD_Set_Cursor
+								LCD_CMD
+									LCD_WRITE_4Bit
+										LCD_WRITE
+											I2C1_Start
+												I2C1_Is_Idle
+												____DoIFC
+											I2C1_Wr
+												____DoIFC
+											I2C1_Stop
+							LCD_WRITE_Char
 								LCD_WRITE_4Bit
 									LCD_WRITE
 										I2C1_Start

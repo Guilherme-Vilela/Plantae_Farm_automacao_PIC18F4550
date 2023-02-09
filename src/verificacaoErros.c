@@ -12,11 +12,11 @@ void verificarLeds()
 
   if (luminosidade >= luminosidadeMAX)
   {
-    desligaLed();
+    //desligaLed(0);
   }
   else if (luminosidade <= luminosidadeMIN)
   {
-    ligaLed();
+    //ligaLed(0);
   }
 }
 void verificarTemperaturaAgua()
@@ -29,17 +29,17 @@ void verificarTemperaturaAgua()
     temperaturaIdeal = (temperaturaAguaMAX + temperaturaAguaMIN) / 2;
     if (temperaturaAgua > temperaturaIdeal)
     {
-      ligaCoolerAgua();
+      ligaCoolerAgua(0);
     }
     else if (temperaturaAgua == temperaturaIdeal)
     {
       // desligaResistencia();
-      desligaCoolerAgua();
+      desligaCoolerAgua(0);
     }
     else if (temperaturaAgua < temperaturaIdeal)
     {
       // ligaResistencia();
-      desligaCoolerAgua();
+      desligaCoolerAgua(0);
     }
   }
 }
@@ -54,15 +54,15 @@ void verificarTemperatura()
     temperaturaIdeal = (temperaturaMAX + temperaturaMIN) / 2;
     if (temperatura > temperaturaIdeal)
     {
-      ligaCoolerAmbiente();
+      ligaCoolerAmbiente(0);
     }
     else if (temperatura == temperaturaIdeal)
     {
-      desligaCoolerAmbiente();
+      desligaCoolerAmbiente(0);
     }
     else if (temperatura < temperaturaIdeal)
     {
-      desligaCoolerAmbiente();
+      desligaCoolerAmbiente(0);
     }
   }
 }

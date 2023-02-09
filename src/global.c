@@ -54,6 +54,7 @@ bit erroIluminacao;
 bit erroComunicaoesp;
 bit mensagemExibidaa;
 bit erroI2C;
+bit modoFuncionamento; //1 = automatico //0 para manual
  
 unsigned short int interrupcaoKBI;
 char status_atuadores;
