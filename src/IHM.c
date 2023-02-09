@@ -75,19 +75,19 @@ unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned 
   case menuSensores: // menu2 de sensores e seus derivados
     switch (posicaoSubMenu)
     {
-    case subMenuTemperaturaAmb:
+    case SUBMENU_TEMPERATURA_AMBIENTE:
       menuSensoresTempAmb_0();
       break;
-    case subMenuUmidade:
+    case SUBMENU_UMIDADE:
       menuSensoresUmidade_1();
       break;
-    case subMenuTemperaturaAgua:
+    case SUBMENU_TEMPERATURA_AGUA:
       menuSensoresTempAgua_2();
       break;
-    case subMenuPH:
+    case SUBMENU_PH:
       menuSensoresPH_3();
       break;
-    case subMenuLuminosidade:
+    case SUBMENU_LUMINOSIDADE:
       menuSensoresLuminosidade_4();
       break;
     }
@@ -95,29 +95,30 @@ unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned 
   case menuAtuadores: // menu2 de Atuadores_3
     switch (posicaoSubMenu)
     {
-    case subMenuMotorPrincipal: // SUB MENU TEMPERATURA AMB
+    case SUBMENU_MOTOR_PRINCIPAL: // SUB MENU TEMPERATURA AMB
       menuAtuadoresMotorPrincipal_0();
       break;
-    case subMenuMotorAuxiliar: // SUB MENU TEMPERATURA AMB
+    case SUBMENU_MOTOR_AUXILIAR: // SUB MENU TEMPERATURA AMB
       menuAtuadoresMotorAuxiliar_1();
       break;
-    case subMenuLeds: // SUB MENU TEMPERATURA AMB
+    case SUBMENU_LEDS: // SUB MENU TEMPERATURA AMB
       menuAtuadoresLeds_2();
       break;
-    case subMenuCoolerAmbiente: // SUB MENU TEMPERATURA AMB
+    case SUBMENU_COOLER_AMBIENTE: // SUB MENU TEMPERATURA AMB
       menuAtuadoresCoolerAmbiente_3();
       break;
-    case subMenuCoolerAgua: // SUB MENU TEMPERATURA AMB
+    case SUBMENU_COOLER_AGUA: // SUB MENU TEMPERATURA AMB
       menuAtuadoresCoolerAgua_4();
       break;
     }
     break;
   }
+
   return posicaoSubMenu;
 }
 unsigned short int movimentaSubmenuAlteracoes(unsigned short int posicaoSubMenuAlteracao, unsigned short int posicaoMenu, unsigned short int posicaoSubMenu, unsigned short int digito)
 {
-  unsigned short int quantidadeSubMenusAlteracao = 3;
+  unsigned short int quantidadeSubMenusAlteracao = 5;
   if (posicaoSubMenuAlteracao == 255)
   {
     posicaoSubMenu = quantidadeSubMenusAlteracao - 1;
@@ -133,44 +134,52 @@ unsigned short int movimentaSubmenuAlteracoes(unsigned short int posicaoSubMenuA
   case menuSensores: // menu SENSORES
     switch (posicaoSubMenu)
     {
-    case subMenuTemperaturaAmb: // SUB MENU TEMPERATURA AMB
-      alteraValorMaxMinSubMenuSensores(digito, subMenuTemperaturaAmb);
+    case SUBMENU_TEMPERATURA_AMBIENTE: // SUB MENU TEMPERATURA AMB
+      alteraValorMaxMinSubMenuSensores(digito, SUBMENU_TEMPERATURA_AMBIENTE);
       break;
-    case subMenuUmidade:
-      alteraValorMaxMinSubMenuSensores(digito, subMenuUmidade);
+    case SUBMENU_UMIDADE:
+      alteraValorMaxMinSubMenuSensores(digito, SUBMENU_UMIDADE);
       break;
-    case subMenuTemperaturaAgua:
-      alteraValorMaxMinSubMenuSensores(digito, subMenuTemperaturaAgua);
+    case SUBMENU_TEMPERATURA_AGUA:
+      alteraValorMaxMinSubMenuSensores(digito, SUBMENU_TEMPERATURA_AGUA);
       break;
-    case subMenuPH:
-      alteraValorMaxMinSubMenuSensores(digito, subMenuPH);
+    case SUBMENU_PH:
+      alteraValorMaxMinSubMenuSensores(digito, SUBMENU_PH);
       break;
-    case subMenuLuminosidade:
-      alteraValorMaxMinSubMenuSensores(digito, subMenuLuminosidade);
+    case SUBMENU_LUMINOSIDADE:
+      alteraValorMaxMinSubMenuSensores(digito, SUBMENU_LUMINOSIDADE);
       break;
     }
     break;
   case 2: // menu de atuaodres
     switch (posicaoSubMenu)
     {
-    case subMenuMotorPrincipal:
+      // alternarEstadoAtuadores(unsigned short int digitoPressionado, unsigned short int atuador, char atuadorNome[10])
+    case SUBMENU_MOTOR_PRINCIPAL:
       alterarPotenciaMotor(digito, &dutyCicle1);
       break;
-    case subMenuMotorAuxiliar:
+    case SUBMENU_MOTOR_AUXILIAR:
       alterarPotenciaMotor(digito, &dutyCicle1);
       break;
-    case subMenuLeds:
-      alterarPotenciaMotor(digito, &dutyCicle1);
+    case SUBMENU_LEDS:
+      alternarEstadoAtuadores(digito, ATUADOR_LED, "LED");
       break;
-    case subMenuCoolerAmbiente:
-      alterarPotenciaMotor(digito, &dutyCicle1);
+    case SUBMENU_COOLER_AMBIENTE:
+      alternarEstadoAtuadores(digito, ATUADOR_COOLER_AMBIENTE, "COOLER_AMB");
       break;
-    case subMenuCoolerAgua:
-      alterarPotenciaMotor(digito, &dutyCicle1);
+    case SUBMENU_COOLER_AGUA:
+      alternarEstadoAtuadores(digito, ATUADOR_COOLER_AGUA, "COOLER_H2O");
+      break;
+    case SUBMENU_RESISTENCIA:
+      alternarEstadoAtuadores(digito, ATUADOR_COOLER_AGUA, "RESISTENCIA");
       break;
     }
     break;
   }
+#define ATUADOR_LED 0
+#define ATUADOR_COOLER_AMBIENTE 1
+#define ATUADOR_COOLER_AGUA 2
+#define ATUADOR_RESISTENCIA 3
   return posicaoSubMenuAlteracao;
 }
 int alteraPosicao(unsigned short int posicao, unsigned short int acao)

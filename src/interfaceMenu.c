@@ -1,19 +1,17 @@
 #include "interfaceMenu.h"
 #include "LCD_I2C.h"
 #include "plantas.h"
+#include "global.h"
 void menuCultivo_0(){
   LCD_Clear();
-//  if (planta_cultivada != 255)
-//  {
-    LCD_Out(1, 1, " CULTIVO: ");
-//    LCD_Out(2, 1, plantas[planta_cultivada]);
-    //diasRestantes = duracaoCultivo[planta_cultivada];
-  //}
-  //else if (planta_cultivada == 255)
- // {
-    //Lcd_Out(1, 3, "CULTIVO NAO ");
-    //Lcd_Out(2, 3, "SELECIONADO");
-  //}
+    LCD_Out(1, 1, "CULTIVO: ");
+    LCD_Out(2, 1, "MODO: ");
+    if(modoFuncionamento){
+    LCD_Out(2, 7, "AUTOMATICO");
+    }else{
+    LCD_Out(2, 7, "MANUAL");
+    }
+
 }
 void menuSensores_1()
 {

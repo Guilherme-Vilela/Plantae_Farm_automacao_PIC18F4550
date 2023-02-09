@@ -107,6 +107,7 @@ alteraposicao
 alterarpotenciamotor
 alteravalormaxminsubmenusensores
 alteravariavel
+alternarestadoatuadores
 an0
 an0_bit
 an1
@@ -825,6 +826,7 @@ menusensoresph_3
 menusensorestempagua_2
 menusensorestempamb_0
 menusensoresumidade_1
+modofuncionamento
 movimentamenu
 movimentarmenuprincipal
 movimentasubmenu
@@ -1604,6 +1606,7 @@ verificarcorrentemotorprincipal
 verificarleds
 verificarnivelagua
 verificarph
+verificarsolicitante
 verificartemperatura
 verificartemperaturaagua
 verificartensaobateria

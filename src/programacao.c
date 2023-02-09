@@ -171,7 +171,7 @@ void main()
   ADCON0 = 0b00000001; //
   ADCON1 = 0b00000101; // HABILITA DE A0 ATE A9 COMO ENTRADA ANALOGICA
   ADCON2 = 0b00111110;
-
+  modoFuncionamento = AUTOMATICO;
   //******************************************************************************
   //   FIM CONFIGURA��ES CONVERSOR ANALOGICO DIGITAL
   //******************************************************************************

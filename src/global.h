@@ -43,7 +43,7 @@ extern unsigned short int erroMotor;
 
 extern unsigned short int SemAguaCano;
 extern unsigned short int erroTemperatura;
-extern unsigned short int interrupcaoTeclado = 0;
+extern unsigned short int interrupcaoTeclado;
 
 #define flagLeituraTeclado interrupcaoTeclado.b0
 #define flagLeituraTecladoEmAndamento interrupcaoTeclado.b1
@@ -57,7 +57,9 @@ extern bit erroComunicaoesp;
 extern bit mensagemExibidaa;
 
 extern bit erroI2C;
-
+extern bit modoFuncionamento; 
+#define AUTOMATICO 1
+#define MANUAL 0
 extern unsigned short int interrupcaoKBI;
 #define falhaRedeEnergia interrupcaoKBI.b0
 #define leituraEspDisponivel interrupcaoKBI.b1
