@@ -1,7 +1,6 @@
 main
 	__CC2DW
 	I2C1_Init
-	I2C1_SetTimeoutCallback
 	LCD_Init
 		LCD_WRITE
 			I2C1_Start
@@ -56,14 +55,23 @@ main
 		I2C1_Wr
 			____DoIFC
 		I2C1_Stop
-	iniciarPWM
+	controlePWM1
 		PWM1_Init
 		PWM1_Start
 		PWM1_Set_Duty
 			Mul_16X16_U
-		aceleraPWM1
-			PWM1_Set_Duty
-				Mul_16X16_U
+		sendTopic
+			intToChar
+				Div_16x16_S
+					Div_16x16_S_L
+			I2C1_Start
+				I2C1_Is_Idle
+				____DoIFC
+			I2C1_Wr
+				____DoIFC
+			I2C1_Stop
+		PWM1_Stop
+	startTimer0
 	verificaSensores
 		leituraDht11
 			startTimer1
@@ -97,30 +105,106 @@ main
 			leituraAnalogica
 				ADC_Read
 					Delay_22us
-		analisarVariaveis
-			verificarLeds
-			verificarTemperaturaAgua
-				Equals_Double
-				byte2double
-					NRM4032
-						SETFUN32
-						FIXSIGN32
-						SETFOV32
-						RES032
-				Compare_Double
-				ligaCoolerAgua
-					verificarSolicitante
-				desligaCoolerAgua
-					verificarSolicitante
-			verificarTemperatura
-				ligaCoolerAmbiente
-					verificarSolicitante
-				desligaCoolerAmbiente
-					verificarSolicitante
-			verificarCorrenteMotorPrincipal
-			verificarCorrenteCooler
-			verificarCorrenteCoolerAgua
-	startTimer0
+	analisarVariaveis
+		verificarLeds
+			sendTopic
+				intToChar
+					Div_16x16_S
+						Div_16x16_S_L
+				I2C1_Start
+					I2C1_Is_Idle
+					____DoIFC
+				I2C1_Wr
+					____DoIFC
+				I2C1_Stop
+		verificarTemperaturaAgua
+			double2int
+				SETIOV3224
+			sendTopic
+				intToChar
+					Div_16x16_S
+						Div_16x16_S_L
+				I2C1_Start
+					I2C1_Is_Idle
+					____DoIFC
+				I2C1_Wr
+					____DoIFC
+				I2C1_Stop
+			Equals_Double
+			byte2double
+				NRM4032
+					SETFUN32
+					FIXSIGN32
+					SETFOV32
+					RES032
+			Compare_Double
+			controleCoolerAgua
+				sendTopic
+					intToChar
+						Div_16x16_S
+							Div_16x16_S_L
+					I2C1_Start
+						I2C1_Is_Idle
+						____DoIFC
+					I2C1_Wr
+						____DoIFC
+					I2C1_Stop
+		verificarTemperatura
+			sendTopic
+				intToChar
+					Div_16x16_S
+						Div_16x16_S_L
+				I2C1_Start
+					I2C1_Is_Idle
+					____DoIFC
+				I2C1_Wr
+					____DoIFC
+				I2C1_Stop
+			controleCoolerAmbiente
+				sendTopic
+					intToChar
+						Div_16x16_S
+							Div_16x16_S_L
+					I2C1_Start
+						I2C1_Is_Idle
+						____DoIFC
+					I2C1_Wr
+						____DoIFC
+					I2C1_Stop
+		verificarCorrenteMotorPrincipal
+			sendTopic
+				intToChar
+					Div_16x16_S
+						Div_16x16_S_L
+				I2C1_Start
+					I2C1_Is_Idle
+					____DoIFC
+				I2C1_Wr
+					____DoIFC
+				I2C1_Stop
+		verificarCorrenteCooler
+			sendTopic
+				intToChar
+					Div_16x16_S
+						Div_16x16_S_L
+				I2C1_Start
+					I2C1_Is_Idle
+					____DoIFC
+				I2C1_Wr
+					____DoIFC
+				I2C1_Stop
+		verificarCorrenteCoolerAgua
+			sendTopic
+				intToChar
+					Div_16x16_S
+						Div_16x16_S_L
+				I2C1_Start
+					I2C1_Is_Idle
+					____DoIFC
+				I2C1_Wr
+					____DoIFC
+				I2C1_Stop
+	verificarErros
 	atualizarInformacoes
 		movimentaMenu
 			resetarAcoesSubMenuAlteracao
@@ -1280,6 +1364,19 @@ main
 										I2C1_Wr
 											____DoIFC
 										I2C1_Stop
+					setPWM1
+						PWM1_Set_Duty
+							Mul_16X16_U
+						sendTopic
+							intToChar
+								Div_16x16_S
+									Div_16x16_S_L
+							I2C1_Start
+								I2C1_Is_Idle
+								____DoIFC
+							I2C1_Wr
+								____DoIFC
+							I2C1_Stop
 					LCD_Cursor
 						LCD_CMD
 							LCD_WRITE_4Bit
@@ -1341,6 +1438,50 @@ main
 										____DoIFC
 									I2C1_Stop
 				alternarEstadoAtuadores
+					controleLed
+						sendTopic
+							intToChar
+								Div_16x16_S
+									Div_16x16_S_L
+							I2C1_Start
+								I2C1_Is_Idle
+								____DoIFC
+							I2C1_Wr
+								____DoIFC
+							I2C1_Stop
+					controleCoolerAmbiente
+						sendTopic
+							intToChar
+								Div_16x16_S
+									Div_16x16_S_L
+							I2C1_Start
+								I2C1_Is_Idle
+								____DoIFC
+							I2C1_Wr
+								____DoIFC
+							I2C1_Stop
+					controleCoolerAgua
+						sendTopic
+							intToChar
+								Div_16x16_S
+									Div_16x16_S_L
+							I2C1_Start
+								I2C1_Is_Idle
+								____DoIFC
+							I2C1_Wr
+								____DoIFC
+							I2C1_Stop
+					controleResistenciaAmbiente
+						sendTopic
+							intToChar
+								Div_16x16_S
+									Div_16x16_S_L
+							I2C1_Start
+								I2C1_Is_Idle
+								____DoIFC
+							I2C1_Wr
+								____DoIFC
+							I2C1_Stop
 					LCD_Clear
 						LCD_CMD
 							LCD_WRITE_4Bit
@@ -1404,6 +1545,16 @@ main
 		setPWM1
 			PWM1_Set_Duty
 				Mul_16X16_U
+			sendTopic
+				intToChar
+					Div_16x16_S
+						Div_16x16_S_L
+				I2C1_Start
+					I2C1_Is_Idle
+					____DoIFC
+				I2C1_Wr
+					____DoIFC
+				I2C1_Stop
 	verificaPressionamentoTeclado
 		leituraTeclado
 			__CC2DW
@@ -2590,6 +2741,19 @@ main
 											I2C1_Wr
 												____DoIFC
 											I2C1_Stop
+						setPWM1
+							PWM1_Set_Duty
+								Mul_16X16_U
+							sendTopic
+								intToChar
+									Div_16x16_S
+										Div_16x16_S_L
+								I2C1_Start
+									I2C1_Is_Idle
+									____DoIFC
+								I2C1_Wr
+									____DoIFC
+								I2C1_Stop
 						LCD_Cursor
 							LCD_CMD
 								LCD_WRITE_4Bit
@@ -2651,6 +2815,50 @@ main
 											____DoIFC
 										I2C1_Stop
 					alternarEstadoAtuadores
+						controleLed
+							sendTopic
+								intToChar
+									Div_16x16_S
+										Div_16x16_S_L
+								I2C1_Start
+									I2C1_Is_Idle
+									____DoIFC
+								I2C1_Wr
+									____DoIFC
+								I2C1_Stop
+						controleCoolerAmbiente
+							sendTopic
+								intToChar
+									Div_16x16_S
+										Div_16x16_S_L
+								I2C1_Start
+									I2C1_Is_Idle
+									____DoIFC
+								I2C1_Wr
+									____DoIFC
+								I2C1_Stop
+						controleCoolerAgua
+							sendTopic
+								intToChar
+									Div_16x16_S
+										Div_16x16_S_L
+								I2C1_Start
+									I2C1_Is_Idle
+									____DoIFC
+								I2C1_Wr
+									____DoIFC
+								I2C1_Stop
+						controleResistenciaAmbiente
+							sendTopic
+								intToChar
+									Div_16x16_S
+										Div_16x16_S_L
+								I2C1_Start
+									I2C1_Is_Idle
+									____DoIFC
+								I2C1_Wr
+									____DoIFC
+								I2C1_Stop
 						LCD_Clear
 							LCD_CMD
 								LCD_WRITE_4Bit

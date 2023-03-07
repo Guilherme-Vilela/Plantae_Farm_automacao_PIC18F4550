@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=interfaceSubMenuAlteracao.c
+Value=programacao.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -41,16 +41,20 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-File0=programacao.c
-File1=interfaceSubMenuAlteracao.h
-File2=IHM.c
-File3=ESP_I2C.c
-File4=verificacaoErros.c
-File5=leituraAD.c
-File6=interfaceMenu.c
-File7=global.c
-File8=interfaceSubMenuAlteracao.c
-Count=9
+File0=ESP_I2C.c
+File1=programacao.c
+File2=LCD_I2C.h
+File3=IHM.h
+File4=global.h
+File5=conversao.c
+File6=atuadores.c
+File7=verificacaoErros.c
+File8=PWM.c
+File9=IHM.c
+File10=DHT11.c
+File11=leituraAD.c
+File12=interfaceSubMenu.c
+Count=13
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -88,7 +92,8 @@ File1=PWM
 File2=ADC
 File3=One_Wire
 File4=USB
-Count=5
+File5=C_String
+Count=6
 [INTERRUPT_DEFS]
 VECTOR_MODE=0
 IVT_BASE=00000008
@@ -100,11 +105,8 @@ Count=3
 [LIB_EXPANDED_NODES]
 0=mikroE Libraries
 1=System Libraries
-2=ADC
 385=PWM
-408=Software_SPI
-881=Time
-Count=7
+Count=3
 [PROGRAMMER_TYPE]
 Value=mikroE mikroProg
 [CODEGRIP_OPTIONS]

@@ -2,75 +2,74 @@
 #include "global.h"
 #include "atuadores.h"
 #include "ESP_I2C.h"
-
+#include "LCD_I2C.h"
+unsigned short int erros[5];
 void verificarLeds()
 {
-  char topic[5] = topicLuminosidade;
-
+  //char topic[5] = topicLuminosidade;
+   sendTopic(topicLuminosidade, luminosidade);
   // envia luminosidade para o ESP publicar
   ////sendTopic(topic, luminosidade);
 
   if (luminosidade >= luminosidadeMAX)
   {
-    //desligaLed(0);
+    // controleLed(0);
   }
   else if (luminosidade <= luminosidadeMIN)
   {
-    //ligaLed(0);
+    // controleLed(0);
   }
 }
 void verificarTemperaturaAgua()
 {
-  char topic[5] = topicTemperaturaAgua;
   unsigned short int temperaturaIdeal = 0;
-  // sendTopic(topic, temperaturaAgua);
+  sendTopic(topicTemperaturaAgua, temperaturaAgua);
   if (temperaturaAgua != 99)
   {
     temperaturaIdeal = (temperaturaAguaMAX + temperaturaAguaMIN) / 2;
     if (temperaturaAgua > temperaturaIdeal)
     {
-      ligaCoolerAgua(0);
+      controleCoolerAgua(0,LIGAR);
     }
     else if (temperaturaAgua == temperaturaIdeal)
     {
-      // desligaResistencia();
-      desligaCoolerAgua(0);
+      // controleResistencia();
+      controleCoolerAgua(0,DESLIGAR);
     }
     else if (temperaturaAgua < temperaturaIdeal)
     {
-      // ligaResistencia();
-      desligaCoolerAgua(0);
+      // controleResistencia();
+      controleCoolerAgua(0,DESLIGAR);
     }
   }
 }
 void verificarTemperatura()
 {
-  char topic[5] = topicTemperatura;
   // envia luminosidade para o ESP publicar
-  // sendTopic(topic, temperatura);
   unsigned short int temperaturaIdeal = 0;
+  
+  sendTopic(topicTemperatura, temperatura);
   if (temperatura != 99)
   {
     temperaturaIdeal = (temperaturaMAX + temperaturaMIN) / 2;
     if (temperatura > temperaturaIdeal)
     {
-      ligaCoolerAmbiente(0);
+      controleCoolerAmbiente(0,LIGAR);
     }
     else if (temperatura == temperaturaIdeal)
     {
-      desligaCoolerAmbiente(0);
+      controleCoolerAmbiente(0,DESLIGAR);
     }
     else if (temperatura < temperaturaIdeal)
     {
-      desligaCoolerAmbiente(0);
+      controleCoolerAmbiente(0,DESLIGAR);
     }
   }
 }
 void verificarUmidade()
 {
-  char topic[5] = topicUmidade;
   // envia luminosidade para o ESP publicar
-  // sendTopic(topic, umidade);
+  sendTopic(topicUmidade, umidade);
   // unsigned short int umidadeIdeal = 0;
   // umidadeIdeal = (umidadeMAX+umidadeMIN)/2;
   // if (umidade >= umidadeIdeal)
@@ -88,9 +87,9 @@ void verificarUmidade()
 }
 void verificarPh()
 {
-  char topic[5] = topicPh;
+
   // envia luminosidade para o ESP publicar
-  // sendTopic(topic, ph);
+  sendTopic(topicPh, ph);
 
   //       if(ph >= phMAX){
   // enviar mensagem de erro ou setar bit
@@ -100,9 +99,8 @@ void verificarPh()
 }
 void verificarTensaoBateria()
 {
-  char topic[5] = topicTensaoBateria;
   // envia luminosidade para o ESP publicar
-  // sendTopic(topic, tensaoBateria);
+  sendTopic(topicTensaoBateria, tensaoBateria);
 
   if (tensaoBateria <= tensaoBateriaMIN)
   {
@@ -111,9 +109,8 @@ void verificarTensaoBateria()
 }
 void verificarCorrenteLeds()
 {
-  char topic[5] = topicCorrenteLeds;
   // envia luminosidade para o ESP publicar
-  // sendTopic(topic, correnteLeds);
+  sendTopic(topicCorrenteLeds, correnteLeds);
 
   if (correnteLeds >= correnteLedsMAX)
   {
@@ -122,9 +119,8 @@ void verificarCorrenteLeds()
 }
 void verificarNivelAgua()
 {
-  char topic[5] = topicNivelAgua;
   // envia luminosidade para o ESP publicar
-  // sendTopic(topic, nivelAgua);
+  sendTopic(topicNivelAgua, nivelAgua);
   if (nivelAgua <= nivelAguaMIN)
   {
     // enviar mensagem de erro ou setar bit
@@ -136,9 +132,8 @@ void verificarVazaoAgua()
 }
 void verificarCorrenteMotorAuxiliar()
 {
-  char topic[5] = topicCorrenteMotorAuxiliar;
   // envia luminosidade para o ESP publicar
-  // sendTopic(topic, correnteMotorAuxiliar);
+  sendTopic(topicCorrenteMotorAuxiliar, correnteMotorAuxiliar);
 
   if (correnteMotorAuxiliar >= correnteMotorAuxiliarMAX)
   {
@@ -148,9 +143,8 @@ void verificarCorrenteMotorAuxiliar()
 void verificarCorrenteMotorPrincipal()
 {
 
-  char topic[5] = topicCorrenteMotor;
   // envia luminosidade para o ESP publicar
-  // sendTopic(topic, correnteMotorPrincipal);
+  sendTopic(topicCorrenteMotor, correnteMotorPrincipal);
 
   if (correnteMotorPrincipal >= correnteMotorPrincipalMAX)
   {
@@ -159,9 +153,8 @@ void verificarCorrenteMotorPrincipal()
 }
 void verificarCorrenteCooler()
 {
-  char topic[5] = topicCorrenteCoolerPlanta;
-  // envia luminosidade para o ESP publicar
-  // sendTopic(topic, correnteCooler);
+// envia luminosidade para o ESP publicar
+  sendTopic(topicCorrenteCoolerPlanta, correnteCooler);
   if (correnteCooler >= correnteCoolerMAX)
   {
     // enviar mensagem de erro ou setar bit
@@ -169,9 +162,8 @@ void verificarCorrenteCooler()
 }
 void verificarCorrenteCoolerAgua()
 {
-  char topic[5] = topicCorrenteCoolerAgua;
   // envia luminosidade para o ESP publicar
-  // sendTopic(topic, correnteCoolerAgua);
+  sendTopic(topicCorrenteCoolerAgua, correnteCoolerAgua);
   if (correnteCoolerAgua >= correnteCoolerAguaMAX)
   {
     // enviar mensagem de erro ou setar bit
@@ -201,81 +193,97 @@ LCD_Out(2,1,mesagem);
 //mensagemExibida = 1;
 
 }*/
-/*void verificarErros(){
-
-//falhas motor
-  if (erroMotor.b0 && mensagemExibida == 0){
-  mensagemErro("Falha MOTOR-1");
-  erroMotor.b0 = 0;
-  }else if(erroMotor.b1 && mensagemExibida == 0){
-   mensagemErro("Falha MOTOR-2");
-   erroMotor.b1 = 0;
+void verificarErros()
+{
+}
+void adicionarErro(unsigned short int erroOcorrido)
+{
+  unsigned short int i;
+  while (i < 5 && erros[i] != 0)
+  {
+    i++;
   }
-   if(SemAguaCano.b0 && mensagemExibida == 0){
-     mensagemErro("S/ AGUA BANCA 1");
-     SemAguaCano.b0 = 0;
-
-   }else if(SemAguaCano.b1 && mensagemExibida == 0){
-     mensagemErro("S/ AGUA BANCA 2");
-     SemAguaCano.b1 = 0;
-
-   }else if(SemAguaCano.b2 && mensagemExibida == 0){
-     mensagemErro("S/ AGUA BANCA 3");
-     SemAguaCano.b2 = 0;
-
-   }else if(SemAguaCano.b3 && mensagemExibida == 0){
-     mensagemErro("S/ AGUA BANCA 4");
-     SemAguaCano.b3 = 0;
-
-   }else if(SemAguaCano.b4 && mensagemExibida == 0){
-     mensagemErro("BANCA 1 TAMPADA");
-     SemAguaCano.b4 = 0;
-
-   }else if(SemAguaCano.b5 && mensagemExibida == 0){
-     mensagemErro("BANCA 2 TAMPADA");
-     SemAguaCano.b5 = 0;
-
-   }else if(SemAguaCano.b6 && mensagemExibida == 0){
-     mensagemErro("BANCA 3 TAMPADA");
-     SemAguaCano.b6 = 0;
-
-   } else if(SemAguaCano.b7 && mensagemExibida == 0){
-     mensagemErro("BANCA 4 TAMPADA");
-     SemAguaCano.b7 = 0;
-
-   }
-   if(erroSensorCano.b0 && mensagemExibida == 0){
-     mensagemErro("2 BANCA S/ AGUA");
-     erroSensorCano.b0 = 0;
-
-   }else if(SemAguaCano.b7 && mensagemExibida == 0){
-     mensagemErro("FALHA SENSOR CANO");
-      SemAguaCano.b7 = 0;
-   }
-
-   if(erroTemperatura.b0 && mensagemExibida == 0){
-    mensagemErro("TEMP AMB MIN <");
-    erroTemperatura.b0 =0;
-
-   }else if(erroTemperatura.b1 && mensagemExibida == 0) {
-    mensagemErro("TEMP AMB MAX >");
-    erroTemperatura.b1 =0;
-
-   }else if(erroTemperatura.b2 && mensagemExibida == 0) {
-    mensagemErro("TEMP AGUA MIN <");
-    erroTemperatura.b2 =0;;
-
-   }else if(erroTemperatura.b3 && mensagemExibida == 0) {
-    mensagemErro("TEMP AGUA MAX >");
-    erroTemperatura.b3 =0;
-   }
-   if(mensagemExibida == 0){
-    atualizar = 1;
-   }
-}*/
+  if (i != 5)
+  {
+    erros[i] = erroOcorrido;
+  }
+}
+void mostrarErrosLcd()
+{
+  unsigned short int i;
+  while (i < 5 && erros[i] == 0)
+  {
+    i++;
+  }
+  if (i != 5)
+  {
+    switch (erros[i])
+    {
+    case ERRO_MOTOR_PRINCIPAL:
+      LCD_Out(1, 1, "ERRO_MOTOR_PRINCIPAL");
+      break;
+    case ERRO_MOTOR_AUXILIAR:
+      LCD_Out(1, 1, "ERRO_MOTOR_AUXILIAR");
+      break;
+    case ERRO_TEMPERATURA_AMBIENTE_MAX:
+      LCD_Out(1, 1, "ERRO_TEMPERATURA_AMBIENTE_MAX");
+      break;
+    case ERRO_TEMPERATURA_AMBIENTE_MIN:
+      LCD_Out(1, 1, "ERRO_TEMPERATURA_AMBIENTE_MIN");
+      break;
+    case ERRO_TEMPERATURA_AGUA_MAX:
+      LCD_Out(1, 1, "ERRO_TEMPERATURA_AGUA_MAX");
+      break;
+    case ERRO_TEMPERATURA_AGUA_MIN:
+      LCD_Out(1, 1, "ERRO_TEMPERATURA_AGUA_MIN");
+      break;
+    case ERRO_LUMINOSIDADE_MAX:
+      LCD_Out(1, 1, "ERRO_LUMINOSIDADE_MAX");
+      break;
+    case ERRO_LUMINOSIDADE_MIN:
+      LCD_Out(1, 1, "ERRO_LUMINOSIDADE_MIN");
+      break;
+    case ERRO_UMIDADE_MAX:
+      LCD_Out(1, 1, "ERRO_UMIDADE_MAX");
+      break;
+    case ERRO_UMIDADE_MIN:
+      LCD_Out(1, 1, "ERRO_UMIDADE_MIN");
+      break;
+    case ERRO_PH_MAX:
+      LCD_Out(1, 1, "ERRO_PH_MAX");
+      break;
+    case ERRO_PH_MIN:
+      LCD_Out(1, 1, "ERRO_PH_MIN");
+      break;
+    case ERRO_COOLER_AMBIENTE:
+      LCD_Out(1, 1, "ERRO_COOLER_AMBIENTE");
+      break;
+    case ERRO_COOLER_AGUA:
+      LCD_Out(1, 1, "ERRO_COOLER_AGUA");
+      break;
+    case ERRO_RESISTENCIA:
+      LCD_Out(1, 1, "ERRO_RESISTENCIA");
+      break;
+    case ERRO_LEDS:
+      LCD_Out(1, 1, "ERRO_LEDS");
+      break;
+    case ERRO_COMUNICACAO_DHT11:
+      LCD_Out(1, 1, "ERRO_COMUNICACAO_DHT11");
+      break;
+    case ERRO_COMUNICACAO_DS18B20:
+      LCD_Out(1, 1, "ERRO_COMUNICACAO_DS18B20");
+      break;
+    case ERRO_LDR:
+      LCD_Out(1, 1, "ERRO_LDR");
+      break;
+    }
+    erros[i] = 0;
+    LCD_Chr(2, 16, "A");
+  }
+}
 void resetaMensagemErro()
 {
   // LCD_Clear();
   // mensagemExibida = 0;
-  // verificarErros();
+  verificarErros();
 }

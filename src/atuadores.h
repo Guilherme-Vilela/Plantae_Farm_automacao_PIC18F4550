@@ -14,13 +14,15 @@
 
 // DEFINEES ATUADORES
 
-void ligaCoolerAmbiente(unsigned short int solicitante);
-void desligaCoolerAmbiente(unsigned short int solicitante);
-void ligaResistenciaAmbiente(unsigned short int solicitante);
-void desligaResistenciaAmbiente(unsigned short int solicitante);
-void ligaCoolerAgua(unsigned short int solicitante);
-void desligaCoolerAgua(unsigned short int solicitante);
-void ligaResistenciaAgua(unsigned short int solicitante);
-void desligaResistenciaAgua(unsigned short int solicitante);
-void ligaLed();
-void desligaLed();
+void controleCoolerAmbiente(unsigned short int solicitante, unsigned short int acao);
+void controleResistenciaAmbiente(unsigned short int solicitante, unsigned short int acao);
+void controleCoolerAgua(unsigned short int solicitante, unsigned short int acao);
+void controleResistenciaAgua(unsigned short int solicitante, unsigned short int acao);
+void controleLed(unsigned short int solicitante, unsigned short int acao);
+void controlePWM1(unsigned short int solicitante, unsigned short int acao);
+void controlePWM2(unsigned short int solicitante, unsigned short int acao);
+void aceleraPWM1(short valor);
+void aceleraPWM2(short valor);
+void desaceleraPWM1(short valor);
+void desaceleraPWM2(short valor);
+void setPWM1();
