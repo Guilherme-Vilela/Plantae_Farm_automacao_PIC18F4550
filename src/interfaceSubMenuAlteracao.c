@@ -3,7 +3,7 @@
 #include "global.h"
 #include "conversao.h"
 #include "atuadores.h"
-
+#include "ESP_I2C.h"
 static unsigned short int etapaConversao = 0;
 static unsigned short int milhar = 0, centena = 0, dezena = 0, unidade = 0;
 void alteraVariavel(unsigned short int *valorMin, unsigned short int *valorMax, unsigned short int digitoPressionado)
@@ -148,7 +148,7 @@ void alterarPotenciaMotor(unsigned short int digitoPressionado, unsigned short i
       *dutyCicle = (int)((dezena * 10) + unidade) * 255 / 100;
     }
     resetarAcoesSubMenuAlteracao();
-    atualizar = atualizarPWM1;
+    setPWM1();
     modoFuncionamento = MANUAL;
   }
   LCD_Cursor();
@@ -189,21 +189,21 @@ void alternarEstadoAtuadores(unsigned short int digitoPressionado, unsigned shor
   case ATUADOR_LED:
     if (digitoPressionado == 65)
     {
-      PIN_LED = unidade;
+      controleLed(1,unidade);
     }
     estado = PIN_LED;
     break;
   case ATUADOR_COOLER_AMBIENTE:
     if (digitoPressionado == 65)
     {
-      COOLER_AMBIENTE = unidade;
+      controleCoolerAmbiente(1,unidade);
     }
     estado = COOLER_AMBIENTE;
     break;
   case ATUADOR_COOLER_AGUA:
     if (digitoPressionado == 65)
     {
-      COOLER_AGUA = unidade;
+      controleCoolerAgua(1,unidade);
     }
     estado = COOLER_AGUA;
 
@@ -211,7 +211,7 @@ void alternarEstadoAtuadores(unsigned short int digitoPressionado, unsigned shor
   case ATUADOR_RESISTENCIA:
     if (digitoPressionado == 65)
     {
-      RESISTENCIA_AMBIENTE = unidade;
+      controleResistenciaAmbiente(1,unidade);
     }
     estado = RESISTENCIA_AMBIENTE;
     break;
@@ -220,6 +220,7 @@ void alternarEstadoAtuadores(unsigned short int digitoPressionado, unsigned shor
   {
     modoFuncionamento = MANUAL;
     atualizar = atualizaMenuSair;
+    resetarAcoesSubMenuAlteracao();
   }
 
   LCD_Clear();
@@ -242,12 +243,12 @@ void alternarEstadoAtuadores(unsigned short int digitoPressionado, unsigned shor
   else if (digitoPressionado == 1)
   {
     LCD_Out(1, 13, "ON");
-    unidade = 0;
+    unidade = 1;
   }
   else if (digitoPressionado == 0)
   {
     LCD_Out(1, 13, "OFF");
-    unidade = 1;
+    unidade = 0;
   }
   LCD_Chr(2, 16, 'A');
 }

@@ -6,22 +6,32 @@
 #include "WS2812.h"
 #include "atuadores.h"
 #include "IHM.h"
-#include "ESP_I2C.h"
 #include "leituraAD.h"
 #include "timer.h"
 #include "verificacaoErros.h"
-#include "PWM.h"
+#include "conversao.h"
+#include "ESP_I2C.h"
+unsigned short int erro_I2C;
 // #include "plantas.h"
 //******************************************************************************
 //    VOID DE INTERRUP��ES
 //**************************0****************************************************
-
 void interrupt(void)
 { // Interrup��es de alta prioridade
   if (INTCON.TMR0IF)
   {
     timer0++;
     INTCON.TMR0IF = 0;
+  }
+  if (PIR1.TMR1IF)
+  {
+    timer1++;
+    PIR1.TMR1IF = 0;
+  }
+
+  if (PIR1.ADIF)
+  {
+    PIR1.ADIF = 0;
   }
   if (INTCON.RBIF)
   {
@@ -45,16 +55,6 @@ void interrupt(void)
     }
     INTCON.RBIF = 0;
   }
-  if (PIR1.TMR1IF)
-  {
-    timer1++;
-    PIR1.TMR1IF = 0;
-  }
-
-  if (PIR1.ADIF)
-  {
-    PIR1.ADIF = 0;
-  }
 }
 void interrupt_low(void)
 { // Interrup��es de baixa prioridade
@@ -67,10 +67,7 @@ void verificaSensores()
 {
   leituraDht11(&umidade, &temperatura); // leitura de valores DHT11
   leituraDs18b20(&temperaturaAgua);     // LEITURA TEMPERATURA DA �GUA
-  leituraPortasAnalogicas(); // faz a leitura das 9 entradas analogicas
-
-  analisarVariaveis();
-  //  verificarErros();           //VALIDA��O DE ERROS
+  leituraPortasAnalogicas();            // faz a leitura das 9 entradas analogicas
 }
 void atualizarInformacoes()
 {
@@ -91,41 +88,32 @@ void atualizarInformacoes()
   case atualizaLCD:
     movimentaMenu('X');
     break;
-  case atualizarPWM1:
-    setPWM1();
-    break;
   default:
     break;
   }
   atualizar = 0;
 }
-void I2C1_TimeoutCallback(char errorCode)
+void verificarEspNotificacoes()
 {
-  erroI2c = 1;
-  I2C1_Stop();
-  if (errorCode == _I2C_TIMEOUT_RD)
+  char topic[5], value[4];
+  readTopic(&topic[0], &value[0]);
+  if (strcmp(topic, topicCoolerAguaUser))
   {
-
-    // do something if timeout is caused during read
-  }
-
-  if (errorCode == _I2C_TIMEOUT_WR)
-  {
-    // do something if timeout is caused during write
-  }
-
-  if (errorCode == _I2C_TIMEOUT_START)
-  {
-    // do something if timeout is caused during start
-  }
-
-  if (errorCode == _I2C_TIMEOUT_REPEATED_START)
-  {
-    // do something if timeout is caused during repeated start
+    if (value[2] == '1')
+    {
+      controleCoolerAgua(1,LIGAR);
+    }
+    else
+    {
+      controleCoolerAgua(1,DESLIGAR);
+    }
   }
 }
 void main()
 {
+  unsigned short int time_erro;
+  unsigned short int endereco_i2c = 0, teste_i2c, erro_I2C = 0;
+  char teste[3];
   delay_ms(500);
   //******************************************************************************
   //   CONFIGURA��ES DE INTERRUP��O
@@ -179,37 +167,44 @@ void main()
   //******************************************************************************
   //   Inicializa��o
   //******************************************************************************
-
   //  flagLeituraTeclado = 0;
   I2C1_Init(100000); // Inicializa comunica��o I2C
-  I2C1_SetTimeoutCallback(100, I2C1_TimeoutCallback);
   // set timeout period and callback function
 
   LCD_Init();
   LCD_Clear();
   LCD_Out(1, 1, "PLANTAE SOLUCOES");
   LCD_Out(2, 1, "*******-********");
-
-  iniciaTeclado();
-  iniciarPWM();
-  verificaSensores();
-
-  startTimer0();
   delay_ms(100);
+  iniciaTeclado();
+  controlePWM1(1,LIGAR);
+  // verificaSensores();
+  startTimer0();
+  atualizar = atualizaLCD;
+  LCD_Clear();
   for (;;) // LOOP
   {
     if (timer0 > 10)
     {
       timer0 = 0;
-      // erroI2c = 0;
-      verificaSensores(); // VALIDA��O DE ERROS
+      verificaSensores(); // Verifica sensores
+      analisarVariaveis();
+      time_erro++;
       atualizar = atualizaLCD;
+
+      if (time_erro++ > 3)
+      {
+        verificarErros();
+      }
     }
+    // else if (timer0 % 2 == 0 && timer0 < 10)
+    // {
     if (atualizar > 0)
     {
       atualizarInformacoes();
     }
+    // }
     verificaPressionamentoTeclado();
-
-  } // FINAL LOOP
-} // FINAL MAIN
+  }
+} // FINAL LOOP
+  // FINAL MAIN

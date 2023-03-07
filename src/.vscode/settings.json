@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "*.cp": "c",
-        "verificacaoerros.h": "c"
+        "verificacaoerros.h": "c",
+        "ws2812.h": "c",
+        "atuadores.h": "c"
     }
 }

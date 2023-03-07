@@ -47,7 +47,7 @@ void movimentaTeste(int menu, int submenu, int submenuteste)
 unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned short int posicaoMenu)
 {
   unsigned short int quantidadeSubMenu = 0;
-  short int quantidadeSubMenus[5] = {1, 5, 5, 2, 4};
+  short int quantidadeSubMenus[5] = {2, 5, 5, 2, 4};
 
   quantidadeSubMenu = quantidadeSubMenus[posicaoMenu]; // pega a quantidade de submenus do Menu principal
 
@@ -66,8 +66,8 @@ unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned 
     {
     case 0:
       LCD_Clear();
-      LCD_Out(1, 1, "SUB MENU");
-      LCD_Out(2, 1, "11");
+      LCD_Out(1, 1, "Comunicando com ESP");
+      LCD_Out(2, 1, "ENVIOU") ;
       break;
     }
     break;
@@ -366,7 +366,7 @@ void leituraTeclado()
   }
   /*Lcd_Chr(2,1,teclaPressionada);*/
   flagLeituraTecladoEmAndamento = 0; // RESET BIT INDICANDO QUE A PROCESSO ACABOU
-  flagStatusTeclado = 1;             //  TECLADO PRESSIONADO
+  flagEstadoTeclado = 1;             //  TECLADO PRESSIONADO
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -384,7 +384,7 @@ void verificaTecladoSolto()
   I2C1_Stop();                     // FINALIZA COMUNICA��O I2C
   if (digitoPressionado == 15)
   {                        // VERIFICA SE O TECLADO FOI SOLTO
-    flagStatusTeclado = 0; // LIBERA BIT PARA PODER INCIAR UMA NOVA LEITURA DE TECLADO
+    flagEstadoTeclado = 0; // LIBERA BIT PARA PODER INCIAR UMA NOVA LEITURA DE TECLADO
   }
 }
 
@@ -393,7 +393,7 @@ void verificaPressionamentoTeclado()
 {                         // FUN��O PADR�O
   if (flagLeituraTeclado) // VERIFICA SE HOUVE ALGUM CLICK  1= SIM 0 =NAO
   {
-    if (flagStatusTeclado == 0) // 1= PRESSIONADO 0= SOLTO
+    if (flagEstadoTeclado == 0) // 1= PRESSIONADO 0= SOLTO
     {
       leituraTeclado();
     }

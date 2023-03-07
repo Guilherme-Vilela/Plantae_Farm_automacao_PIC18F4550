@@ -19,76 +19,56 @@ unsigned short int verificarSolicitante(unsigned short int solicitante)
     return 0;
   }
 }
-void ligaCoolerAmbiente(unsigned short int solicitante)
+void controleCoolerAmbiente(unsigned short int solicitante, unsigned short int acao)
 {
-  char topic[5] = topicStatusCoolerPlanta;
-  // sendTopic(topic, 1);
-
-  if (verificarSolicitante(solicitante) == 1)
+  sendTopic(topicEstadoCoolerPlanta, acao);
+  if (acao == LIGAR)
   {
     COOLER_AMBIENTE_TRIS = 0;
     COOLER_AMBIENTE = 0; // logica invertida
   }
-}
-void desligaCoolerAmbiente(unsigned short int solicitante)
-{
-  char topic[5] = topicStatusCoolerPlanta;
-  // sendTopic(topic, 0);
-  if (verificarSolicitante(solicitante) == 1)
+  else
   {
     COOLER_AMBIENTE_TRIS = 0;
     COOLER_AMBIENTE = 1; // logica invertida
   }
 }
 
-void ligaResistenciaAmbiente(unsigned short int solicitante)
+void controleResistenciaAmbiente(unsigned short int solicitante, unsigned short int acao)
 {
-  char topic[5] = topicResistencia;
-  // sendTopic(topic, 1);
-
-  if (verificarSolicitante(solicitante) == 1)
+  sendTopic(topicEstadoResistencia, acao);
+  if (acao == LIGAR)
   {
     RESISTENCIA_TRIS_AMBIENTE = 0;
     RESISTENCIA_AMBIENTE = 0; // logica invertida
   }
-}
-void desligaResistenciaAmbiente(unsigned short int solicitante)
-{
-  char topic[5] = topicResistencia;
-  // sendTopic(topic, 0);
-  if (verificarSolicitante(solicitante) == 1)
+  else
   {
     RESISTENCIA_TRIS_AMBIENTE = 0;
     RESISTENCIA_AMBIENTE = 1; // logica invertida
   }
 }
+
 // FUN��ES DE AMBIENTE
 
-void ligaCoolerAgua(unsigned short int solicitante)
+void controleCoolerAgua(unsigned short int solicitante, unsigned short int acao)
 {
-  char topic[5] = topicStatusCoolerAgua;
-  // sendTopic(topic, 1);
-  if (verificarSolicitante(solicitante) == 1)
+  sendTopic(topicEstadoCoolerAgua, acao);
+  if (acao == LIGAR)
   {
     COOLER_AGUA_TRIS = 0;
     COOLER_AGUA = 0; // logica invertida
   }
-}
-void desligaCoolerAgua(unsigned short int solicitante)
-{
-  char topic[5] = topicStatusCoolerAgua;
-  // sendTopic(topic, 0);
-  if (verificarSolicitante(solicitante) == 1)
+  else
   {
     COOLER_AGUA_TRIS = 0;
     COOLER_AGUA = 1; // logica invertida
   }
 }
 
-void ligaLed()
+void controleLed(unsigned short int solicitante, unsigned short int acao)
 {
-  char topic[5] = topicStatusLeds;
-  // sendTopic(topic, 1);
+  sendTopic(topicEstadoLeds, acao);
   //   stopTimer0();
   /*azul();
    vermelho();
@@ -98,17 +78,53 @@ void ligaLed()
   /*T0CON = 0x87;*/
 }
 
-void desligaLed()
+void aceleraPWM1(short valor){
+    dutyCicle1 += valor;
+    PWM1_Set_Duty(dutyCicle1);        // Atualiza Duty cicle PWM1
+}
+void aceleraPWM2(short valor){
+    dutyCicle2 += valor;
+    PWM2_Set_Duty(dutyCicle2);        // Atualiza Duty cicle PWM2
+}
+void desaceleraPWM1(short valor){
+    dutyCicle1 -= valor;
+    PWM1_Set_Duty(dutyCicle1);        // Atualiza Duty cicle PWM2
+}
+void desaceleraPWM2(short valor){
+    dutyCicle2 -= valor;
+    PWM2_Set_Duty(dutyCicle2);        // Atualiza Duty cicle PWM2
+}
+void setPWM1()
 {
-  char topic[5] = topicStatusLeds;
-  // sendTopic(topic, 0);
-  // stopTimer0();
+  PWM1_Set_Duty(dutyCicle1);
+  sendTopic(topicEstadoMotorPrincipal, dutyCicle1);
+}
 
-  /*preto();
-    preto();
-    preto();
-    preto();
-    preto();*/
-
-  /*T0CON = 0x87;*/
+void controlePWM1(unsigned short int solicitante, unsigned short int acao)
+{
+  if(acao == LIGAR){
+  PWM1_Init(10000);          // Configura o PWM para 10Khz
+  dutyCicle1 = 255;            // Duty cicle a ser utilizado 0 - 255
+  PWM1_Start();              // inicia PWM1   CCP1
+  PWM1_Set_Duty(dutyCicle1); // Atualiza Duty cicle PWM1
+  sendTopic(topicEstadoMotorPrincipal, dutyCicle1);
+  }else{
+   dutyCicle1 = 0;
+   PWM1_Set_Duty(dutyCicle1);
+   PWM1_Stop();
+  }
+}
+void controlePWM2(unsigned short int solicitante, unsigned short int acao)
+{
+  if(acao == LIGAR){
+  PWM2_Init(10000);          // Configura o PWM para 10Khz
+  PWM2_Start();              // start PWM2    CCP1
+  dutyCicle2 = 255;            // Duty cicle a ser utilizado 0 - 255
+  PWM2_Set_Duty(dutyCicle2); // Atualiza Duty cicle PWM2
+  }else{
+   dutyCicle2 = 0;
+   PWM2_Set_Duty(dutyCicle2);
+   PWM2_Stop();
+  }
+  sendTopic(topicEstadoMotorAuxiliar, dutyCicle2);
 }
