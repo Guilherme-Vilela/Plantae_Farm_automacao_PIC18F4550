@@ -211,6 +211,7 @@ ccpr2h
 ccpr2l
 cfgs
 cfgs_bit
+chartoint
 chs0
 chs0_bit
 chs1

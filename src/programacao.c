@@ -1,4 +1,3 @@
-
 #include "global.h"
 #include "DHT11.h"
 #include "LCD_I2C.h"
@@ -95,20 +94,46 @@ void atualizarInformacoes()
 }
 void verificarEspNotificacoes()
 {
-  char topic[5], value[4];
-  readTopic(&topic[0], &value[0]);
-  if (strcmp(topic, topicCoolerAguaUser))
+  unsigned short int valor;
+  char topic[6], value[5];
+  if (I2C1_Is_Idle)
   {
-    if (value[2] == '1')
+    readTopic(&topic[0], &value[0]);
+
+    if (topic[0] != '0')
     {
-      controleCoolerAgua(1,LIGAR);
-    }
-    else
-    {
-      controleCoolerAgua(1,DESLIGAR);
+      LCD_Clear();
+      LCD_Out(1, 1, topic);
+      LCD_Out(2, 1, value);
+      if (!strcmp(topic, topicCoolerAguaUser))
+      {
+        value[2] == '1' ? controleCoolerAgua(1, LIGAR) : controleCoolerAgua(1, DESLIGAR);
+      }
+      else if (!strcmp(topic, topicCoolerPlantaUser))
+      {
+        value[2] == '1' ? controleCoolerAmbiente(1, LIGAR) : controleCoolerAmbiente(1, DESLIGAR);
+      }
+      else if (!strcmp(topic, topicLedsUser))
+      {
+        value[2] == '1' ? controleLed(1, LIGAR) : controleLed(1, DESLIGAR);
+      }
+      else if (!strcmp(topic, topicMotorAuxiliarUser))
+      {
+         valor= charToInt(value);
+      }
+      else if (!strcmp(topic, topicMotorPrincipalUser))
+      {
+        dutyCicle1 = ((value[0]-48)*100)+((value[1]-48)*10)+((value[2]-48));
+        setPWM1();
+      }
+      else if (!strcmp(topic, topicResistenciaUser))
+      {
+        value[2] == '1' ? controleResistenciaAmbiente(1, LIGAR) : controleResistenciaAmbiente(1, DESLIGAR);
+      }
     }
   }
 }
+
 void main()
 {
   unsigned short int time_erro;
@@ -177,7 +202,7 @@ void main()
   LCD_Out(2, 1, "*******-********");
   delay_ms(100);
   iniciaTeclado();
-  controlePWM1(1,LIGAR);
+  controlePWM1(1, LIGAR);
   // verificaSensores();
   startTimer0();
   atualizar = atualizaLCD;
@@ -205,6 +230,7 @@ void main()
     }
     // }
     verificaPressionamentoTeclado();
+    verificarEspNotificacoes();
   }
 } // FINAL LOOP
   // FINAL MAIN

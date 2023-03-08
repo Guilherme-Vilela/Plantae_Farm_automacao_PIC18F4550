@@ -28,3 +28,8 @@ void leituraADFloat(int valor_lido, char *enderecoUnidade , char *enderecoDecima
       }
 //float result = valor_lido*1;
 }
+unsigned short int charToInt(char valor[5]){
+    int conversion;
+    conversion = ((valor[0]-48)*100)+((valor[1]-48)*10)+((valor[2]-48));
+    return conversion;
+}

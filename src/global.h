@@ -62,20 +62,44 @@ extern unsigned short int dutyCicle1, dutyCicle2;
 
 extern char Estado_atuadores;
 
+extern unsigned short int atualizar = 0;
+#define atualizaMenuEntrar 65
+#define atualizaMenuSair 66
+#define atualizaMenuAvancar 67
+#define atualizaMenuVoltar 68
+#define atualizaLCD 1
+#define atualizarPWM1 99
+#define atualizarPWM2 100
 
-
-
+// extern unsigned short int erro;
+#define ERRO_MOTOR_PRINCIPAL 1
+#define ERRO_MOTOR_AUXILIAR 2
+#define ERRO_TEMPERATURA_AMBIENTE_MAX 3
+#define ERRO_TEMPERATURA_AMBIENTE_MIN 4
+#define ERRO_TEMPERATURA_AGUA_MAX 5
+#define ERRO_TEMPERATURA_AGUA_MIN 6
+#define ERRO_LUMINOSIDADE_MAX 7
+#define ERRO_LUMINOSIDADE_MIN 8
+#define ERRO_UMIDADE_MAX 9
+#define ERRO_UMIDADE_MIN 10
+#define ERRO_PH_MAX 11
+#define ERRO_PH_MIN 12
+#define ERRO_COOLER_AMBIENTE 13
+#define ERRO_COOLER_AGUA 14
+#define ERRO_RESISTENCIA 15
+#define ERRO_LEDS 16
+#define ERRO_COMUNICACAO_DHT11 17
+#define ERRO_COMUNICACAO_DS18B20 18
+#define ERRO_LDR 19
 
 //---------TOPICOS DE ATUADORES, SOLICITADOS DO USUARIO (TOPICOS QUE LEMOS DO ESP) -------//
 
-#define topicCoolerAguaUser "COASR"
-#define topicCoolerAguaUser "COAAR"
-#define topicCoolerPlantaUser "COPAR"
-#define topicLedsUser "LEDAR"
-#define topicMotorAuxiliarUser "MTAAR"
-#define topicLuminosidadeUser "LUMRR"
-#define topicMotorPrincipalUser "MTPAR"
-#define topicResistenciaUser "RESAR"
+#define topicCoolerAguaUser     "COASR"
+#define topicCoolerPlantaUser   "COPSR"
+#define topicLedsUser           "LEDSR"
+#define topicMotorAuxiliarUser  "MTASR"
+#define topicMotorPrincipalUser "MTPSR"
+#define topicResistenciaUser    "RESSR"
 
 //---------TOPICOS DE CONFIGURACAO, SOLICITADOS DO USUARIO (TOPICOS QUE LEMOS DO ESP) -------//
 #define topicUmidadeMaxUser "UMIHR"
@@ -130,33 +154,3 @@ extern char Estado_atuadores;
 #define topicCorrenteMotor "MTPCW"
 #define topicCorrenteMotorAuxiliar "MTACW"
 #define topicCorrenteResistencia "RESCW"
-
-extern unsigned short int atualizar = 0;
-#define atualizaMenuEntrar 65
-#define atualizaMenuSair 66
-#define atualizaMenuAvancar 67
-#define atualizaMenuVoltar 68
-#define atualizaLCD 1
-#define atualizarPWM1 99
-#define atualizarPWM2 100
-
-// extern unsigned short int erro;
-#define ERRO_MOTOR_PRINCIPAL 1
-#define ERRO_MOTOR_AUXILIAR 2
-#define ERRO_TEMPERATURA_AMBIENTE_MAX 3
-#define ERRO_TEMPERATURA_AMBIENTE_MIN 4
-#define ERRO_TEMPERATURA_AGUA_MAX 5
-#define ERRO_TEMPERATURA_AGUA_MIN 6
-#define ERRO_LUMINOSIDADE_MAX 7
-#define ERRO_LUMINOSIDADE_MIN 8
-#define ERRO_UMIDADE_MAX 9
-#define ERRO_UMIDADE_MIN 10
-#define ERRO_PH_MAX 11
-#define ERRO_PH_MIN 12
-#define ERRO_COOLER_AMBIENTE 13
-#define ERRO_COOLER_AGUA 14
-#define ERRO_RESISTENCIA 15
-#define ERRO_LEDS 16
-#define ERRO_COMUNICACAO_DHT11 17
-#define ERRO_COMUNICACAO_DS18B20 18
-#define ERRO_LDR 19

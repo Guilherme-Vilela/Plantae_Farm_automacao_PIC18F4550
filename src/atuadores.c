@@ -103,7 +103,7 @@ void setPWM1()
 void controlePWM1(unsigned short int solicitante, unsigned short int acao)
 {
   if(acao == LIGAR){
-  PWM1_Init(10000);          // Configura o PWM para 10Khz
+  PWM1_Init(15000);          // Configura o PWM para 10Khz
   dutyCicle1 = 255;            // Duty cicle a ser utilizado 0 - 255
   PWM1_Start();              // inicia PWM1   CCP1
   PWM1_Set_Duty(dutyCicle1); // Atualiza Duty cicle PWM1
