@@ -102,16 +102,19 @@ extern unsigned short int atualizar = 0;
 #define topicResistenciaUser    "RESSR"
 
 //---------TOPICOS DE CONFIGURACAO, SOLICITADOS DO USUARIO (TOPICOS QUE LEMOS DO ESP) -------//
-#define topicUmidadeMaxUser "UMIHR"
-#define topicUmidadeMinUser "UMILR"
+#define topicUmidadeMaxUser         "UMIHR"
+#define topicUmidadeMinUser         "UMILR"
 #define topicTemperaturaAguaMaxUser "TPAHR"
 #define topicTemperaturaAguaMinUser "TPALR"
-#define topicTemperaturaMaxUser "TMPHR"
-#define topicTemperaturaMiUsern "TMPLR"
-#define topicLuminosidadeMaxUser "LUMHR"
-#define topicLuminosidadeMinUser "LUMLR"
-#define topicPhMaxUser "SPHHR"
-#define topicPhMinUser "SPHLR"
+#define topicTemperaturaMaxUser     "TMPHR"
+#define topicTemperaturaMiUsern     "TMPLR"
+#define topicLuminosidadeMaxUser    "LUMHR"
+#define topicLuminosidadeMinUser    "LUMLR"
+#define topicPhMaxUser              "SPHHR"
+#define topicPhMinUser              "SPHLR"
+#define nivelMax                    "NVLHR"
+#define nivelMin                    "NVLLR"
+
 
 //---------TOPICOS DE CONFIGURACAO DOS SENSORES -------//
 
