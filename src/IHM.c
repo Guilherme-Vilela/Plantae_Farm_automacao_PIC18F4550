@@ -38,11 +38,6 @@ unsigned short int movimentarMenuPrincipal(unsigned short int posicao)
   }
   return posicao;
 }
-void movimentaTeste(int menu, int submenu, int submenuteste)
-{
-  int posicoes[3];
-#define posicao menu
-}
 
 unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned short int posicaoMenu)
 {
@@ -65,9 +60,7 @@ unsigned short int movimentaSubMenu(unsigned short int posicaoSubMenu, unsigned 
     switch (posicaoSubMenu)
     {
     case 0:
-      LCD_Clear();
-      LCD_Out(1, 1, "Comunicando com ESP");
-      LCD_Out(2, 1, "ENVIOU") ;
+      menuSelecaoCultivo_0();
       break;
     }
     break;
@@ -130,6 +123,12 @@ unsigned short int movimentaSubmenuAlteracoes(unsigned short int posicaoSubMenuA
   switch (posicaoMenu)
   {
   case menuCultivo: // menu de cultivo
+    switch (posicaoSubMenu)
+    {
+    case 0:
+    
+      break;
+    }
     break;
   case menuSensores: // menu SENSORES
     switch (posicaoSubMenu)
@@ -412,4 +411,29 @@ void iniciaTeclado()
   I2C1_Wr(enderecoTecladoEscrita); // Envia o byte por I2C (endere�o do dispositivo + Write)
   I2C1_Wr(configuracaoPortsIO);    // comando de configura��o das portas do CI
   I2C1_Stop();
+}
+
+void atualizarInformacoes()
+{
+  switch (atualizar)
+  {
+  case atualizaMenuEntrar:
+    movimentaMenu('A');
+    break;
+  case atualizaMenuSair:
+    movimentaMenu('B');
+    break;
+  case atualizaMenuAvancar:
+    movimentaMenu('C');
+    break;
+  case atualizaMenuVoltar:
+    movimentaMenu('D');
+    break;
+  case atualizaLCD:
+    movimentaMenu('X');
+    break;
+  default:
+    break;
+  }
+  atualizar = 0;
 }

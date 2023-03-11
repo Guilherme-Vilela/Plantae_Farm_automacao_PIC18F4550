@@ -283,6 +283,7 @@ csen
 csen_bit
 csrc
 csrc_bit
+cultivoselecionado
 cvr0
 cvr0_bit
 cvr1
@@ -390,6 +391,8 @@ endp2
 endp2_bit
 endp3
 endp3_bit
+enviarparametros
+enviarparametrosesp
 epcondis
 epcondis_bit
 epcondis_uep1_bit
@@ -808,6 +811,7 @@ menuatuadoresmotorprincipal_0
 menucultivo_0
 menuplanta_3
 menurede_4
+menuselecaocultivo_0
 menusensores_1
 menusensoresluminosidade_4
 menusensoresph_3
@@ -820,7 +824,6 @@ movimentamenu
 movimentarmenuprincipal
 movimentasubmenu
 movimentasubmenualteracoes
-movimentateste
 mul_16x16_s
 mul_16x16_u
 mul_32x32_fp
@@ -1166,6 +1169,8 @@ scs1_bit
 sdiv3232l
 se0
 se0_bit
+selecaocultivo
+selecaoplanta
 sen
 sen_bit
 sendb
@@ -1615,13 +1620,13 @@ verificarespnotificacoes
 verificarleds
 verificarnivelagua
 verificarph
+verificarsensores
 verificarsolicitante
 verificartemperatura
 verificartemperaturaagua
 verificartensaobateria
 verificarumidade
 verificarvazaoagua
-verificasensores
 verificatecladosolto
 vref_mask
 vrefm

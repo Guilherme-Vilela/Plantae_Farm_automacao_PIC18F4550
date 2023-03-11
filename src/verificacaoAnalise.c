@@ -1,4 +1,4 @@
-#include "verificacaoErros.h"
+#include "verificacaoAnalise.h"
 #include "global.h"
 #include "atuadores.h"
 #include "ESP_I2C.h"

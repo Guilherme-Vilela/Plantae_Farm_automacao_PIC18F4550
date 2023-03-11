@@ -1,15 +1,12 @@
 #include "global.h"
-#include "DHT11.h"
 #include "LCD_I2C.h"
-#include "DS18B20.h"
-#include "WS2812.h"
-#include "atuadores.h"
 #include "IHM.h"
-#include "leituraAD.h"
+#include "cultivo.h"
 #include "timer.h"
-#include "verificacaoErros.h"
+#include "verificacaoAnalise.h"
 #include "conversao.h"
 #include "ESP_I2C.h"
+
 unsigned short int erro_I2C;
 // #include "plantas.h"
 //******************************************************************************
@@ -62,77 +59,6 @@ void interrupt_low(void)
 //******************************************************************************
 //   FIM VOID DE INTERRUP��ES
 //******************************************************************************
-void verificaSensores()
-{
-  leituraDht11(&umidade, &temperatura); // leitura de valores DHT11
-  leituraDs18b20(&temperaturaAgua);     // LEITURA TEMPERATURA DA �GUA
-  leituraPortasAnalogicas();            // faz a leitura das 9 entradas analogicas
-}
-void atualizarInformacoes()
-{
-  switch (atualizar)
-  {
-  case atualizaMenuEntrar:
-    movimentaMenu('A');
-    break;
-  case atualizaMenuSair:
-    movimentaMenu('B');
-    break;
-  case atualizaMenuAvancar:
-    movimentaMenu('C');
-    break;
-  case atualizaMenuVoltar:
-    movimentaMenu('D');
-    break;
-  case atualizaLCD:
-    movimentaMenu('X');
-    break;
-  default:
-    break;
-  }
-  atualizar = 0;
-}
-void verificarEspNotificacoes()
-{
-  unsigned short int valor;
-  char topic[6], value[5];
-  if (I2C1_Is_Idle)
-  {
-    readTopic(&topic[0], &value[0]);
-
-    if (topic[0] != '0')
-    {
-      LCD_Clear();
-      LCD_Out(1, 1, topic);
-      LCD_Out(2, 1, value);
-      if (!strcmp(topic, topicCoolerAguaUser))
-      {
-        value[2] == '1' ? controleCoolerAgua(1, LIGAR) : controleCoolerAgua(1, DESLIGAR);
-      }
-      else if (!strcmp(topic, topicCoolerPlantaUser))
-      {
-        value[2] == '1' ? controleCoolerAmbiente(1, LIGAR) : controleCoolerAmbiente(1, DESLIGAR);
-      }
-      else if (!strcmp(topic, topicLedsUser))
-      {
-        value[2] == '1' ? controleLed(1, LIGAR) : controleLed(1, DESLIGAR);
-      }
-      else if (!strcmp(topic, topicMotorAuxiliarUser))
-      {
-         valor= charToInt(value);
-      }
-      else if (!strcmp(topic, topicMotorPrincipalUser))
-      {
-        dutyCicle1 = ((value[0]-48)*100)+((value[1]-48)*10)+((value[2]-48));
-        setPWM1();
-      }
-      else if (!strcmp(topic, topicResistenciaUser))
-      {
-        value[2] == '1' ? controleResistenciaAmbiente(1, LIGAR) : controleResistenciaAmbiente(1, DESLIGAR);
-      }
-    }
-  }
-}
 
 void main()
 {
@@ -194,33 +120,37 @@ void main()
   //******************************************************************************
   //  flagLeituraTeclado = 0;
   I2C1_Init(100000); // Inicializa comunica��o I2C
-  // set timeout period and callback function
-
   LCD_Init();
   LCD_Clear();
   LCD_Out(1, 1, "PLANTAE SOLUCOES");
   LCD_Out(2, 1, "*******-********");
   delay_ms(100);
   iniciaTeclado();
-  controlePWM1(1, LIGAR);
-  // verificaSensores();
-  startTimer0();
   atualizar = atualizaLCD;
-  LCD_Clear();
+  atualizarInformacoes();
+  while (cultivoSelecionado == 0)
+  { // espera o cultivo ser selecionado
+    verificaPressionamentoTeclado();
+    verificarEspNotificacoes();
+  }
+  enviarParametros();
+  startTimer0();
+  verificarSensores();
   for (;;) // LOOP
   {
     if (timer0 > 10)
     {
       timer0 = 0;
-      verificaSensores(); // Verifica sensores
+      verificarSensores(); // Verifica sensores
       analisarVariaveis();
       time_erro++;
       atualizar = atualizaLCD;
 
-      if (time_erro++ > 3)
-      {
-        verificarErros();
-      }
+      // if (time_erro > 3)
+      // {
+      //   verificarErros();
+      //   time_erro =0;
+      // }
     }
     // else if (timer0 % 2 == 0 && timer0 < 10)
     // {

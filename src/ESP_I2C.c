@@ -1,6 +1,7 @@
 #include "ESP_I2C.h"
 #include "conversao.h"
 #include "global.h"
+#include "atuadores.h"
 void sendTopic(char topic[5], int value)
 {
   char msg[8];
@@ -55,4 +56,119 @@ void readTopic(char *topicRecebido, char *valorRecebido)
   topicRecebido++;
   *valorRecebido = '\0';
   *topicRecebido = '\0';
+}
+void verificarEspNotificacoes()
+{
+  unsigned short int valorInt;
+  char topic[6], value[5];
+  if (I2C1_Is_Idle)
+  {
+    readTopic(&topic[0], &value[0]);
+
+    if (topic[0] != '0')
+    {
+      valorInt = ((value[0] - 48) * 100) + ((value[1] - 48) * 10) + ((value[2] - 48));
+      switch (topic[3])
+      {
+        //------------- TOPICOS SOBRE ATUADORES ------------//
+
+      case 'S':
+        if (!strcmp(topic, topicCoolerAguaUser))
+        {
+          value[2] == '1' ? controleCoolerAgua(1, LIGAR) : controleCoolerAgua(1, DESLIGAR);
+        }
+        else if (!strcmp(topic, topicCoolerPlantaUser))
+        {
+          value[2] == '1' ? controleCoolerAmbiente(1, LIGAR) : controleCoolerAmbiente(1, DESLIGAR);
+        }
+        else if (!strcmp(topic, topicLedsUser))
+        {
+          value[2] == '1' ? controleLed(1, LIGAR) : controleLed(1, DESLIGAR);
+        }
+        else if (!strcmp(topic, topicMotorAuxiliarUser))
+        {
+        }
+        else if (!strcmp(topic, topicMotorPrincipalUser))
+        {
+          dutyCicle1 = valorInt;
+          setPWM1();
+        }
+        else if (!strcmp(topic, topicResistenciaUser))
+        {
+          value[2] == '1' ? controleResistenciaAmbiente(1, LIGAR) : controleResistenciaAmbiente(1, DESLIGAR);
+        }
+        break;
+      case 'H':
+        //------------- TOPICOS VARIAVEIS MAXIMAS DE CONTROLE ATUADORES ------------//
+
+        if (strcmp(topic, topicUmidadeMaxUser) == 0)
+        {
+          umidadeMAX = valorInt;
+        }
+        else if (strcmp(topic, topicTemperaturaAguaMaxUser) == 0)
+        {
+          temperaturaAguaMAX = valorInt;
+        }
+        else if (strcmp(topic, topicTemperaturaMaxUser) == 0)
+        {
+          temperaturaMAX = valorInt;
+        }
+        else if (strcmp(topic, topicLuminosidadeMaxUser) == 0)
+        {
+          luminosidadeMAX = valorInt;
+        }
+        else if (strcmp(topic, topicPhMaxUser) == 0)
+        {
+          phMAX = valorInt;
+        }
+        else if (strcmp(topic, topicNivelMax) == 0)
+        {
+          // nivelAguaMAX = valorInt;
+        }
+        break;
+      case 'L':
+        //------------- TOPICOS VARIAVEIS MINIMAS DE CONTROLE ATUADORES ------------//
+        if (strcmp(topic, topicUmidadeMinUser) == 0)
+        {
+          umidadeMIN = valorInt;
+        }
+        else if (strcmp(topic, topicTemperaturaAguaMinUser) == 0)
+        {
+          temperaturaAguaMIN = valorInt;
+        }
+        else if (strcmp(topic, topicTemperaturaMinUser) == 0)
+        {
+          temperatura = valorInt;
+        }
+
+        else if (strcmp(topic, topicLuminosidadeMinUser) == 0)
+        {
+          luminosidadeMIN = valorInt;
+        }
+        else if (strcmp(topic, topicPhMinUser) == 0)
+        {
+          phMIN = valorInt;
+        }
+        else if (strcmp(topic, topicNivelMin) == 0)
+        {
+          nivelAguaMIN = valorInt;
+        }
+        break;
+      }
+    }
+  }
+}
+void enviarParametros(){
+sendTopic(topicUmidadeMaxUser,umidadeMAX);
+sendTopic(topicUmidadeMinUser,umidadeMIN);
+sendTopic(topicTemperaturaAguaMaxUser,temperaturaAguaMAX);
+sendTopic(topicTemperaturaAguaMinUser,temperaturaAguaMIN);
+sendTopic(topicTemperaturaMaxUser,temperaturaMAX);
+sendTopic(topicTemperaturaMinUser,temperaturaMIN);
+sendTopic(topicLuminosidadeMaxUser,topicLuminosidadeMax);
+sendTopic(topicLuminosidadeMinUser,luminosidadeMIN);
+sendTopic(topicPhMaxUser,phMAX);
+sendTopic(topicPhMinUser,phMIN);
+sendTopic(topicNivelMin,nivelAguaMIN);
+sendTopic(topicCultivo,cultivoSelecionado);
 }

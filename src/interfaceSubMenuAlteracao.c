@@ -252,3 +252,6 @@ void alternarEstadoAtuadores(unsigned short int digitoPressionado, unsigned shor
   }
   LCD_Chr(2, 16, 'A');
 }
+void selecaoPlanta(){
+  
+}

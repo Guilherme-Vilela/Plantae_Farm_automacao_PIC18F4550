@@ -13,3 +13,4 @@ void resetarAcoesSubMenuAlteracao();
 void alteraValorMaxMinSubMenuSensores(unsigned short int digitoPressionado, unsigned short int posicaoSubmenu);
 void alterarPotenciaMotor(unsigned short int digito, unsigned short int *dutyCicle);
 void alternarEstadoAtuadores(unsigned short int digitoPressionado, unsigned short int atuador, char atuadorNome[10]);
+void selecaoPlanta(unsigned short int digitoPressionado);

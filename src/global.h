@@ -42,8 +42,9 @@ extern unsigned short int correnteCoolerMAX;
 extern unsigned short int correnteCoolerAgua;
 extern unsigned short int correnteCoolerAguaMAX;
 
-extern unsigned short int interrupcaoTeclado;
+extern unsigned short int cultivoSelecionado;
 
+extern unsigned short int interrupcaoTeclado;
 #define flagLeituraTeclado interrupcaoTeclado.b0
 #define flagLeituraTecladoEmAndamento interrupcaoTeclado.b1
 #define flagEstadoTeclado interrupcaoTeclado.b2
@@ -92,68 +93,17 @@ extern unsigned short int atualizar = 0;
 #define ERRO_COMUNICACAO_DS18B20 18
 #define ERRO_LDR 19
 
-//---------TOPICOS DE ATUADORES, SOLICITADOS DO USUARIO (TOPICOS QUE LEMOS DO ESP) -------//
-
-#define topicCoolerAguaUser     "COASR"
-#define topicCoolerPlantaUser   "COPSR"
-#define topicLedsUser           "LEDSR"
-#define topicMotorAuxiliarUser  "MTASR"
-#define topicMotorPrincipalUser "MTPSR"
-#define topicResistenciaUser    "RESSR"
-
-//---------TOPICOS DE CONFIGURACAO, SOLICITADOS DO USUARIO (TOPICOS QUE LEMOS DO ESP) -------//
-#define topicUmidadeMaxUser         "UMIHR"
-#define topicUmidadeMinUser         "UMILR"
-#define topicTemperaturaAguaMaxUser "TPAHR"
-#define topicTemperaturaAguaMinUser "TPALR"
-#define topicTemperaturaMaxUser     "TMPHR"
-#define topicTemperaturaMiUsern     "TMPLR"
-#define topicLuminosidadeMaxUser    "LUMHR"
-#define topicLuminosidadeMinUser    "LUMLR"
-#define topicPhMaxUser              "SPHHR"
-#define topicPhMinUser              "SPHLR"
-#define nivelMax                    "NVLHR"
-#define nivelMin                    "NVLLR"
-
-
-//---------TOPICOS DE CONFIGURACAO DOS SENSORES -------//
-
-#define topicUmidadeMax "UMIHW"
-#define topicUmidadeMin "UMILW"
-
-#define topicTemperaturaAguaMax "TPAHW"
-#define topicTemperaturaAguaMin "TPALW"
-
-#define topicTemperaturaMax "TMPHW"
-#define topicTemperaturaMin "TMPLW"
-
-#define topicLuminosidadeMax "LUMHW"
-#define topicLuminosidadeMin "LUMLW"
-
-#define topicPhMax "SPHHW"
-#define topicPhMin "SPHLW"
-
-//---------TOPICOS DE ESTADO DOS SENSORES -------//
-#define topicPh "SPHRW"
-#define topicTemperatura "TMPRW"
-#define topicUmidade "UMIRW"
-#define topicTensaoBateria "VBATW"
-#define topicNivelAgua "NIVEW"
-#define topicTemperaturaAgua "TPARW"
-#define topicLuminosidade "LUMRW"
-
-//---------TOPICOS DE ESTADO DOS ATUADORES -------//
-#define topicEstadoCoolerAgua "COASW"
-#define topicEstadoCoolerPlanta "COPSW"
-#define topicEstadoLeds "LEDSW"
-#define topicEstadoMotorAuxiliar "MTASW"
-#define topicEstadoMotorPrincipal "MTPSW"
-#define topicEstadoResistencia "RESSW"
-
-//---------TOPICOS DE CORRENTE DOS ATUADORES -------//
-#define topicCorrenteCoolerAgua "COACW"
-#define topicCorrenteCoolerPlanta "COPCW"
-#define topicCorrenteLeds "LEDCW"
-#define topicCorrenteMotor "MTPCW"
-#define topicCorrenteMotorAuxiliar "MTACW"
-#define topicCorrenteResistencia "RESCW"
+#define E2PROM_ADDRESS_MODO_OPERACAO 0
+#define E2PROM_ADDRESS_TEMPERATURA_MAX 1
+#define E2PROM_ADDRESS_TEMPERATURA_MIN 2
+#define E2PROM_ADDRESS_LUMINOSIDADE_MAX 3
+#define E2PROM_ADDRESS_LUMINOSIDADE_MIN 4
+#define E2PROM_ADDRESS_TEMPERATURA_AGUA_MAX 5
+#define E2PROM_ADDRESS_TEMPERATUR_AAGUA_MIN 6
+#define E2PROM_ADDRESS_UMIDADE_MAX 7  
+#define E2PROM_ADDRESS_UMIDADE_MIN 8
+#define E2PROM_ADDRESS_NIVEL_AGUA_MAX 9
+#define E2PROM_ADDRESS_NIVEL_AGUA_MIN 10
+#define E2PROM_ADDRESS_PH_MAX 11
+#define E2PROM_ADDRESS_PH_MIN 12
+#define E2PROM_ADDRESS_CULTIVO 13

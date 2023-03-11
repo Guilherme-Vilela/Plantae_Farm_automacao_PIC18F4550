@@ -40,3 +40,5 @@
 void movimentaMenu(char tecla);
 void verificaPressionamentoTeclado();
 void iniciaTeclado();
+void atualizarInformacoes();
+void menuSelecaoCultivo_0();

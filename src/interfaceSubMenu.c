@@ -5,6 +5,8 @@
 
 
 
+
+
 void escritaSensores(int atual, int max, int min, int unidadeMedida)
 {
   char variavelAtual[3];
@@ -35,6 +37,14 @@ void escritaSensores(int atual, int max, int min, int unidadeMedida)
   Lcd_Chr(2, 15, variavelMaxima[1]);
   Lcd_Chr(2, 16, variavelMaxima[2]);
 
+}
+//------------------------// SUBMENU CULTIVO // -----------------------------//
+void menuSelecaoCultivo_0(){
+  if(cultivoSelecionado !=0 ){
+    LCD_Out(1, 1, "TROCA DO CULTIVO");
+  }else{
+  LCD_Out(1, 1, "ESCOLHA CULTIVO");
+  }
 }
 
 //------------------------// SUBMENU SENSORES // -----------------------------//

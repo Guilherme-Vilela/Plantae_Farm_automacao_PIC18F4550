@@ -42,6 +42,7 @@ unsigned short int correnteCoolerMAX =0;
 unsigned short int correnteCoolerAgua =0;
 unsigned short int correnteCoolerAguaMAX =0;
 
+unsigned short int cultivoSelecionado =0;
 
 unsigned short int interrupcaoTeclado = 0;
 
@@ -52,5 +53,6 @@ char status_atuadores;
 
 unsigned short int dutyCicle1,dutyCicle2;
 unsigned short int atualizar;
+
 // unsigned short int erro;
 
