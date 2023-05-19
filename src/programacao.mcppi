@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=IHM.c
+Value=atuadores.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -44,17 +44,15 @@ ActiveImageIndex=-1
 [OPENED_FILES]
 File0=ESP_I2C.c
 File1=programacao.c
-File2=PWM.c
-File3=DHT11.c
-File4=leituraAD.c
-File5=interfaceSubMenu.c
-File6=verificacaoAnalise.c
-File7=verificacaoAnalise.h
-File8=cultivo.c
-File9=cultivo.h
-File10=global.h
-File11=IHM.c
-Count=12
+File2=WS2812.c
+File3=WS2812.h
+File4=timer.c
+File5=atuadores.c
+File6=cultivo.c
+File7=verificacaoAnalise.c
+File8=atuadores.h
+File9=programacao.lst
+Count=10
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -101,13 +99,11 @@ IVT_BASE=00000008
 [EXPANDED_NODES]
 0=programacao.mcppi
 1=Sources
-21=Header Files
-Count=3
+Count=2
 [LIB_EXPANDED_NODES]
-0=mikroE Libraries
 1=System Libraries
 160=EEPROM
-Count=4
+Count=3
 [PROGRAMMER_TYPE]
 Value=mikroE mikroProg
 [CODEGRIP_OPTIONS]

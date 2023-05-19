@@ -252,6 +252,22 @@ void alternarEstadoAtuadores(unsigned short int digitoPressionado, unsigned shor
   }
   LCD_Chr(2, 16, 'A');
 }
-void selecaoPlanta(){
+void selecaoPlanta(unsigned short int digitoPressionado){
+  if(digitoPressionado == 67){
+    unidade++;
+  }
+  else if(digitoPressionado == 68){
+    unidade--;
+  }else if(digitoPressionado == 65){
+     resetarAcoesSubMenuAlteracao();
+     cultivoSelecionado = unidade;
+  }
+
+  switch (unidade)
+  {
+  case 0:
+    break;
+  
+  }
   
 }

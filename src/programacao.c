@@ -6,6 +6,8 @@
 #include "verificacaoAnalise.h"
 #include "conversao.h"
 #include "ESP_I2C.h"
+#include "WS2812.h"
+#include "atuadores.h"
 
 unsigned short int erro_I2C;
 // #include "plantas.h"
@@ -65,7 +67,7 @@ void main()
   unsigned short int time_erro;
   unsigned short int endereco_i2c = 0, teste_i2c, erro_I2C = 0;
   char teste[3];
-  delay_ms(500);
+  /*delay_ms(500);*/
   //******************************************************************************
   //   CONFIGURA��ES DE INTERRUP��O
   //******************************************************************************
@@ -119,20 +121,28 @@ void main()
   //   Inicializa��o
   //******************************************************************************
   //  flagLeituraTeclado = 0;
-  I2C1_Init(100000); // Inicializa comunica��o I2C
+ I2C1_Init(100000); // Inicializa comunica��o I2C
   LCD_Init();
   LCD_Clear();
   LCD_Out(1, 1, "PLANTAE SOLUCOES");
   LCD_Out(2, 1, "*******-********");
-  delay_ms(100);
+  delay_ms(1000);
   iniciaTeclado();
   atualizar = atualizaLCD;
   atualizarInformacoes();
+   desliga_led(100);
+   delay_ms(1000);
+   ligar_led(100);
+   ligar_led(100);
+
+
+
   while (cultivoSelecionado == 0)
   { // espera o cultivo ser selecionado
     verificaPressionamentoTeclado();
-    verificarEspNotificacoes();
+   // verificarEspNotificacoes();
   }
+
   enviarParametros();
   startTimer0();
   verificarSensores();

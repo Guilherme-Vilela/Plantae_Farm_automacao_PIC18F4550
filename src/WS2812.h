@@ -6,3 +6,5 @@ void enviarBit0();
 void vermelho();
 void azul();
 void preto();
+void ligar_led(unsigned short int quantidade);
+void desliga_led(unsigned short int quantidade);

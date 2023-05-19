@@ -122,6 +122,7 @@ an4_bit
 analisarvariaveis
 atualizar
 atualizarinformacoes
+azul
 b0
 b1
 b2
@@ -337,6 +338,7 @@ delay_8ms
 delay_cyc
 desacelerapwm1
 desacelerapwm2
+desliga_led
 dfn8ee
 dfn8ee_bit
 dfn8ef
@@ -391,6 +393,9 @@ endp2
 endp2_bit
 endp3
 endp3_bit
+enviarbit0
+enviarbit1
+enviarbitfinal
 enviarparametros
 enviarparametrosesp
 epcondis
@@ -763,6 +768,7 @@ leituradht11
 leiturads18b20
 leituraportasanalogicas
 leiturateclado
+ligar_led
 longint2double
 longjmp
 longword2double
@@ -985,6 +991,7 @@ pr2
 preinc0
 preinc1
 preinc2
+preto
 prod
 prodh
 prodl
@@ -1628,6 +1635,7 @@ verificartensaobateria
 verificarumidade
 verificarvazaoagua
 verificatecladosolto
+vermelho
 vref_mask
 vrefm
 vrefm_bit
